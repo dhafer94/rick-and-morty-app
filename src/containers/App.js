@@ -1,45 +1,71 @@
 import React, { useState, useEffect } from 'react';
-import List from '../components/List';
+// import List from '../components/List';
 import './App.css';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
+import { FixedSizeList as List } from 'react-window';
 
 function App() {
 	const [characters, setCharacters] = useState([]);
 
+	const fetchPages = async (url) => {
+		const res = await fetch(url);
+		const data = await res.json();
+		setCharacters((characters) => {
+			return [...characters, ...data.results];
+		});
+		if (data.info && data.info.next) {
+			fetchPages(data.info.next);
+		}
+	};
+
+	// This can be done without the syntactic sugar as well
+	// const fetchPages = (url) => {
+	// 	fetch(url)
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			setCharacters((characters) => {
+	// 				return [...characters, ...data.results];
+	// 			});
+	// 			if (data.info && data.info.next) {
+	// 				fetchPages(data.info.next);
+	// 			}
+	// 		});
+	// };
+
 	useEffect(() => {
-		fetch(`https://rickandmortyapi.com/api/character/`)
-			.then((response) => {
-				return response.json();
-			})
-			.then((users) => {
-				// console.log(users.results);
-				setCharacters(users.results);
-			});
+		fetchPages('https://rickandmortyapi.com/api/character');
 	}, []);
+
+	// console.log('characters', characters);
+
+	const Row = ({ index, style }) => <div style={style}>Row {index}</div>;
+
+	const Example = () => (
+		<List height={150} itemCount={1000} itemSize={35} width={300}>
+			{Row}
+		</List>
+	);
 
 	const listItems = characters.map((character) => {
 		return {
 			id: character.id,
 			name: character.name,
 			status: character.status,
-			image: character.image,
+			species: character.species,
+			location: character.location,
+			episode: character.episode,
+			created: character.created,
+			// image: character.image,
 		};
 	});
-
-	// a.name;
-	// b.species;
-	// c.gender;
-	// d.location;
-	// e.episode;
-	// f.status;
-	// g.created;
-	// console.log(listItems[2]);
+	// console.log('listItems', listItems);
 
 	const defaultProps = {
 		options: listItems,
-		getOptionLabel: (option) => option.name + option.status,
+		getOptionLabel: (option) =>
+			option.id + '. ' + option.name + ' - ' + option.status,
 	};
 
 	return !characters.length ? (
@@ -51,16 +77,22 @@ function App() {
 				{...defaultProps}
 				id='auto-highlight'
 				autoHighlight
-				renderInput={(params) => (
-					<TextField
-						{...params}
-						label='Choose a character'
-						variant='standard'
-					/>
-				)}
+				selectOnFocus
+				renderInput={
+					(params) => (
+						// console.log(params)
+						<TextField
+							{...params}
+							label='Choose a character'
+							variant='standard'
+						/>
+					)
+					// defaultProps.options[700].id
+				}
 			/>
 		</div>
 	);
+	// );
 }
 
 export default App;
