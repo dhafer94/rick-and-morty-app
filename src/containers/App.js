@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import List from '../components/List';
 import './App.css';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import Stack from '@mui/material/Stack';
-import { FixedSizeList as List } from 'react-window';
+import VirtualizedAutocomplete from '../components/VirtualizedAutocomplete';
 
 function App() {
 	const [characters, setCharacters] = useState([]);
@@ -38,16 +35,6 @@ function App() {
 		fetchPages('https://rickandmortyapi.com/api/character');
 	}, []);
 
-	// console.log('characters', characters);
-
-	const Row = ({ index, style }) => <div style={style}>Row {index}</div>;
-
-	const Example = () => (
-		<List height={150} itemCount={1000} itemSize={35} width={300}>
-			{Row}
-		</List>
-	);
-
 	const listItems = characters.map((character) => {
 		return {
 			id: character.id,
@@ -60,12 +47,11 @@ function App() {
 			// image: character.image,
 		};
 	});
-	// console.log('listItems', listItems);
 
 	const defaultProps = {
 		options: listItems,
 		getOptionLabel: (option) =>
-			option.id + '. ' + option.name + ' - ' + option.status,
+			option.id + ' - ' + option.name + ' - ' + option.status,
 	};
 
 	return !characters.length ? (
@@ -73,22 +59,10 @@ function App() {
 	) : (
 		<div className='tc'>
 			<h1 className='f1'>Rick and morty Characters list</h1>
-			<Autocomplete
-				{...defaultProps}
-				id='auto-highlight'
-				autoHighlight
-				selectOnFocus
-				renderInput={
-					(params) => (
-						// console.log(params)
-						<TextField
-							{...params}
-							label='Choose a character'
-							variant='standard'
-						/>
-					)
-					// defaultProps.options[700].id
-				}
+
+			<VirtualizedAutocomplete
+				defaultProps={defaultProps}
+				options={listItems}
 			/>
 		</div>
 	);
