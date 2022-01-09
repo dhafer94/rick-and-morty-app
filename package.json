@@ -1,5 +1,5 @@
 {
-	"name": "rick-and-morty-api",
+	"name": "rick-and-morty-app",
 	"homepage": "",
 	"version": "0.1.0",
 	"private": true,
@@ -10,9 +10,14 @@
 		"@testing-library/jest-dom": "^5.15.1",
 		"@testing-library/react": "^11.2.7",
 		"@testing-library/user-event": "^12.8.3",
+		"lodash": "^4.17.21",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
-		"react-scripts": "^3.4.4"
+		"react-scripts": "^5.0.0",
+		"react-virtualized": "^9.22.3",
+		"react-virtuoso": "^2.4.0",
+		"react-window": "^1.8.6",
+		"react-window-infinite-loader": "^1.0.7"
 	},
 	"scripts": {
 		"start": "react-scripts start",

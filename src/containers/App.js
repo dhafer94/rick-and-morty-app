@@ -3,9 +3,13 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import VirtualizedAutocomplete from '../components/VirtualizedAutocomplete';
 
+import _ from 'lodash';
+
 function App() {
 	const [characters, setCharacters] = useState([]);
+	// const [charactersAttributes, setCharactersAttributes] = useState([]);
 
+	//fetching all the characters in one large array using the pagination from the API
 	const fetchPages = async (url) => {
 		const res = await fetch(url);
 		const data = await res.json();
@@ -32,26 +36,33 @@ function App() {
 	// };
 
 	useEffect(() => {
-		fetchPages('https://rickandmortyapi.com/api/character');
+		_.cloneDeep(fetchPages('https://rickandmortyapi.com/api/character'));
 	}, []);
 
-	const listItems = characters.map((character) => {
-		return {
-			id: character.id,
-			name: character.name,
-			status: character.status,
-			species: character.species,
-			location: character.location,
-			episode: character.episode,
-			created: character.created,
-			// image: character.image,
-		};
+	const charactersWithAttributes = _.cloneDeep(
+		characters.map((character) => {
+			return {
+				id: character.id,
+				name: character.name,
+				status: character.status,
+				species: character.species,
+				gender: character.gender,
+				location: character.location.name,
+				episode: character.episode,
+				created: character.created,
+				// image: character.image,
+			};
+		}),
+	);
+	const idArray = charactersWithAttributes.map((character) => {
+		return character.id;
 	});
 
+	// console.log(charactersWithAttributes);
+
 	const defaultProps = {
-		options: listItems,
-		getOptionLabel: (option) =>
-			option.id + ' - ' + option.name + ' - ' + option.status,
+		options: charactersWithAttributes,
+		getOptionLabel: (option) => option.name,
 	};
 
 	return !characters.length ? (
@@ -59,14 +70,20 @@ function App() {
 	) : (
 		<div className='tc'>
 			<h1 className='f1'>Rick and morty Characters list</h1>
-
 			<VirtualizedAutocomplete
 				defaultProps={defaultProps}
-				options={listItems}
+				characters={charactersWithAttributes}
+				id={idArray}
+				name={charactersWithAttributes.name}
+				created={charactersWithAttributes.created}
+				episode={charactersWithAttributes.episode}
+				location={charactersWithAttributes.location}
+				gender={charactersWithAttributes.gender}
+				species={charactersWithAttributes.species}
+				status={charactersWithAttributes.status}
 			/>
 		</div>
 	);
-	// );
 }
 
 export default App;
