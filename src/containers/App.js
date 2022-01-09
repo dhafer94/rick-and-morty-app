@@ -43,11 +43,11 @@ function App() {
 		characters.map((character) => {
 			return {
 				id: character.id,
-				name: character.name,
-				status: character.status,
+				charName: character.name,
+				charStatus: character.status,
 				species: character.species,
 				gender: character.gender,
-				location: character.location.name,
+				charLocation: character.location.name,
 				episode: character.episode,
 				created: character.created,
 				// image: character.image,
@@ -62,7 +62,7 @@ function App() {
 
 	const defaultProps = {
 		options: charactersWithAttributes,
-		getOptionLabel: (option) => option.name,
+		getOptionLabel: (option) => `${option.charName}`,
 	};
 
 	return !characters.length ? (
@@ -73,14 +73,14 @@ function App() {
 			<VirtualizedAutocomplete
 				defaultProps={defaultProps}
 				characters={charactersWithAttributes}
-				id={idArray}
-				name={charactersWithAttributes.name}
+				// id={idArray}
+				CharName={charactersWithAttributes.name}
 				created={charactersWithAttributes.created}
 				episode={charactersWithAttributes.episode}
-				location={charactersWithAttributes.location}
+				CharLocation={charactersWithAttributes.location}
 				gender={charactersWithAttributes.gender}
 				species={charactersWithAttributes.species}
-				status={charactersWithAttributes.status}
+				CharStatus={charactersWithAttributes.status}
 			/>
 		</div>
 	);

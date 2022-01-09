@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { List } from 'react-virtualized';
 // import { FixedSizeList as List } from 'react-window';
-import Attributes from './Attributes';
+import Profile from './Profile';
 
 const ListboxComponent = React.forwardRef(function ListboxComponent(
 	props,
@@ -55,35 +55,38 @@ function VirtualizedAutocomplete({
 	charName,
 	created,
 	episode,
-	location,
+	charLocation,
 	gender,
 	species,
-	status,
+	charStatus,
 }) {
 	// console.log(
 	// 	characters.map((i) => {
 	// 		return i.name;
 	// 	}),
 	// );
-	// const [autocompleteValues, setAutocompleteValues] = useState([]);
+	const [route, setRoute] = useState('home');
+	const [cName, SetCName] = useState([]);
 	const handleChange = (evt) => {
 		if (evt.type === 'click') {
 			if (evt.target.textContent) {
-				// setAutocompleteValues(evt.target.textContent);
+				SetCName(evt.target.textContent);
+				setRoute('profile');
 				console.log(evt);
 			}
 		} else if (evt.type === 'keydown' && evt.keyCode === 13) {
 			console.log(evt);
-			// evt.target.addEventListener('keyup', (evt) => {
-			// 	if (evt.type === 'keyup' && evt.keyCode === 13) {
-			// 		// setidNum(evt.target.value);
-			// 		// console.log(evt.target.value);
-			// 		console.log(evt);
-			// 	}
-			// });
+			evt.target.addEventListener('keyup', (evt) => {
+				if (evt.type === 'keyup' && evt.keyCode === 13) {
+					SetCName(evt.target.value);
+					setRoute('profile');
+					// console.log(evt.target.value);
+					console.log(evt);
+				}
+			});
 		}
 	};
-	// console.log(idNum);
+	console.log(cName);
 
 	// const [profile, setProfile] = useState([]);
 	// console.log(myKey[0]);
@@ -99,44 +102,51 @@ function VirtualizedAutocomplete({
 	// console.log(myKey);
 	return (
 		<div>
-			<Autocomplete
-				{...defaultProps}
-				// id={`char ${id}`}
-				// key={id}
-				// key={key}
-				// value={autocompleteValues}
-				style={{ width }}
-				autoHighlight
-				selectOnFocus
-				isOptionEqualToValue={(option, value) => option.name === value.name}
-				// onKeyUp={handleChange}
-				// onClick={handleChange}
-				onChange={handleChange}
-				// onInputChange={handleChange}
-				ListboxComponent={ListboxComponent}
-				// options={options}
-				// value={options}
-				// renderOption={ }
-				// componentsProps={(options.map((option)=>))}
-				renderInput={(params) => (
-					// console.log(params)
-					<TextField
-						{...params}
-						inputProps={{
-							...params.inputProps,
-						}}
-						// key={key}
-						variant='standard'
-						label='Choose a character'
-						fullWidth
-						// myprop={id.map((i) => {
-						// 	return console.log(i)&& i;
-						// })}
-						// value.hiddenLabel
-					/>
-				)}
-			/>
-			<Attributes id={id} characters={characters} />
+			{route === 'home' ? (
+				<Autocomplete
+					{...defaultProps}
+					id={`character`}
+					// id={id}
+					// key={key}
+					style={{ width }}
+					autoHighlight
+					selectOnFocus
+					isOptionEqualToValue={(option, value) => option.name === value.name}
+					// onKeyUp={handleChange}
+					// onClick={handleChange}
+					onChange={handleChange}
+					// onInputChange={handleChange}
+					ListboxComponent={ListboxComponent}
+					// options={options}
+					// value={options}
+					// renderOption={ }
+					// componentsProps={(options.map((option)=>))}
+					renderInput={(params) => (
+						// console.log(params)
+						<TextField
+							{...params}
+							// inputProps={{
+							// 	...params.inputProps,
+							// }}
+							// id={id}
+							// key={key}
+							variant='standard'
+							label='Choose a character'
+							fullWidth
+							// InputLabelProps={{
+							// 	value: params.charName,
+							// 	id: params.inputProps.id,
+							// }}
+							// myprop={id.map((i) => {
+							// 	return console.log(i)&& i;
+							// })}
+							// value.hiddenLabel
+						/>
+					)}
+				/>
+			) : (
+				<Profile cName={cName} characters={characters} />
+			)}
 		</div>
 	);
 }
