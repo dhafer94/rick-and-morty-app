@@ -1,12 +1,12 @@
 import React from 'react';
+import Card from '@mui/material/Card';
+// import { makeStyles } from '@mui/styles';
 
 export default function Profile({ characters, id }) {
 	// console.log(characters[0].name);
-	const characterFilter = characters.filter(
-		(character) => character.id === id,
-	);
+	const characterFilter = characters.filter((character) => character.id === id);
 	// console.log(characterFilter[0]);
-	const FilteredCharacters = characterFilter.map((character) => {
+	const character = characterFilter.map((character) => {
 		return {
 			id: character.id,
 			charName: character.charName,
@@ -19,21 +19,18 @@ export default function Profile({ characters, id }) {
 		};
 	});
 
-	// console.log(characters);
+	// console.log(character[0]);
 
-	const charInfo = FilteredCharacters.map((character) => {
-		return (
-			<div key={character.id} >
-				<p id={character.id}>Name: {character.charName}</p>
-				<p id={character.id}>Species: {character.species}</p>
-				<p id={character.id}>Gender:{character.gender}</p>
-				<p id={character.id}>Location: {character.charLocation}</p>
-				<p id={character.id}>Episode: {character.episode}</p>
-				<p id={character.id}>Status: {character.charStatus}</p>
-				<p id={character.id}>Created: {character.created}</p>
-			</div >
-		);
-	});
-
-	return <div>{charInfo}</div>;
+	return (
+		// <Card></Card>
+		<Card key={character[0].id}>
+			<p>Name: {character[0].charName}</p>
+			<p>Species: {character[0].species}</p>
+			<p>Gender:{character[0].gender}</p>
+			<p>Location: {character[0].charLocation}</p>
+			<p>Episode: {character[0].episode}</p>
+			<p>Status: {character[0].charStatus}</p>
+			<p>Created: {character[0].created}</p>
+		</Card>
+	);
 }

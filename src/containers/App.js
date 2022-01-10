@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import List from '../components/List';
 import './App.css';
-import VirtualizedAutocomplete from '../components/VirtualizedAutocomplete';
+import VirtualizedAutocomplete from './VirtualizedAutocomplete';
 
 import _ from 'lodash';
 
@@ -36,10 +36,10 @@ function App() {
 
 	//ComponentDidMount
 	useEffect(() => {
-		_.cloneDeep(fetchPages('https://rickandmortyapi.com/api/character'));
+		fetchPages('https://rickandmortyapi.com/api/character');
 	}, []);
 
-	const charactersWithAttributes = characters.map((character) => {
+	const charactersWithTheNeededAttributes = characters.map((character) => {
 		return {
 			id: character.id,
 			charName: character.name,
@@ -58,10 +58,11 @@ function App() {
 		<div className='tc'>
 			<VirtualizedAutocomplete
 				defaultProps={{
-					options: charactersWithAttributes,
-					getOptionLabel: (option) => `${option.charName}`,
+					options: charactersWithTheNeededAttributes,
+					getOptionLabel: (option) =>
+						`${option.charName} - status: ${option.charStatus}`,
 				}}
-				characters={charactersWithAttributes}
+				characters={charactersWithTheNeededAttributes}
 			/>
 		</div>
 	);

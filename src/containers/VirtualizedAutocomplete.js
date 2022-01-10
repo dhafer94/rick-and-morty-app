@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { List } from 'react-virtualized';
-import Profile from './Profile';
+import Profile from '../components/Profile';
 
 const ListboxComponent = React.forwardRef(function ListboxComponent(
 	props,
