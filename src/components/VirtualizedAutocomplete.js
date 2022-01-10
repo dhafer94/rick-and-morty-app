@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { List } from 'react-virtualized';
-// import { FixedSizeList as List } from 'react-window';
 import Profile from './Profile';
 
 const ListboxComponent = React.forwardRef(function ListboxComponent(
 	props,
 	ref,
 ) {
-	const { keys, children, role, ...other } = props;
+	const { children, role, ...other } = props;
 	const itemCount = Array.isArray(children) ? children.length : 0;
 	const itemSize = 36;
 
@@ -22,10 +21,12 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 					rowHeight={itemSize}
 					overscanCount={5}
 					rowCount={itemCount}
-					key={keys}
 					rowRenderer={(props) => {
 						return React.cloneElement(children[props.index], {
+							//here we add the props that we need in our child nodes
 							style: props.style,
+							// they key changer to make them unique
+							key: props.key,
 						});
 					}}
 					role={role}
@@ -34,33 +35,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 		</div>
 	);
 });
-
-// const handleKeyUp = (evt) => {
-// 	// console.log(evt.keyCode);
-// 	characters.map((character) => {
-// 		if ((character.name = evt.input)) {
-// 			evt.target.addEventListener('keyup', () => {});
-// 		}
-// 	});
-// 	if (evt.keyCode === 13) {
-// 		console.log(evt.target.value);
-// 	}
-// };
-
-function VirtualizedAutocomplete({
-	characters,
-	defaultProps,
-	width,
-	id,
-	charName,
-	created,
-	episode,
-	charLocation,
-	gender,
-	species,
-	charStatus,
-	idArray,
-}) {
+function VirtualizedAutocomplete({ characters, defaultProps, width }) {
 	const [route, setRoute] = useState('home');
 	const [charId, setCharId] = useState('');
 	const handleChange = (evt, newVal) => {
@@ -84,19 +59,10 @@ function VirtualizedAutocomplete({
 							// console.log(params)
 							<TextField
 								{...params}
-								// inputProps={{
-								// 	...params.inputProps,
-								// }}
-								// id={idArray}
-								// key={key}
 								variant='standard'
 								label='Choose a character'
 								fullWidth
 								key={charId}
-
-								// onSelect={handleSelect}
-								// value={val}
-								// key={charId}
 							/>
 						)}
 					/>

@@ -39,49 +39,29 @@ function App() {
 		_.cloneDeep(fetchPages('https://rickandmortyapi.com/api/character'));
 	}, []);
 
-	const charactersWithAttributes = _.cloneDeep(
-		characters.map((character) => {
-			return {
-				id: character.id,
-				charName: character.name,
-				charStatus: character.status,
-				species: character.species,
-				gender: character.gender,
-				charLocation: character.location.name,
-				episode: character.episode,
-				created: character.created,
-				// image: character.image,
-			};
-		}),
-	);
-	const idArray = charactersWithAttributes.map((character) => {
-		return character.id;
+	const charactersWithAttributes = characters.map((character) => {
+		return {
+			id: character.id,
+			charName: character.name,
+			charStatus: character.status,
+			species: character.species,
+			gender: character.gender,
+			charLocation: character.location.name,
+			episode: character.episode,
+			created: character.created,
+		};
 	});
-
-	// console.log(charactersWithAttributes);
-
-	const defaultProps = {
-		options: charactersWithAttributes,
-		getOptionLabel: (option) => `${option.charName}`,
-	};
 
 	return !characters.length ? (
 		<h1>Loading</h1>
 	) : (
 		<div className='tc'>
 			<VirtualizedAutocomplete
-				defaultProps={defaultProps}
+				defaultProps={{
+					options: charactersWithAttributes,
+					getOptionLabel: (option) => `${option.charName}`,
+				}}
 				characters={charactersWithAttributes}
-				// id={idArray}
-				// ListboxProps={idArray}
-				key={idArray.filter}
-				CharName={charactersWithAttributes.name}
-				created={charactersWithAttributes.created}
-				episode={charactersWithAttributes.episode}
-				CharLocation={charactersWithAttributes.location}
-				gender={charactersWithAttributes.gender}
-				species={charactersWithAttributes.species}
-				CharStatus={charactersWithAttributes.status}
 			/>
 		</div>
 	);
