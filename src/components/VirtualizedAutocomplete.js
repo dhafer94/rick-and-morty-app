@@ -9,7 +9,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 	props,
 	ref,
 ) {
-	const { children, role, ...other } = props;
+	const { keys, children, role, ...other } = props;
 	const itemCount = Array.isArray(children) ? children.length : 0;
 	const itemSize = 36;
 
@@ -22,7 +22,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 					rowHeight={itemSize}
 					overscanCount={5}
 					rowCount={itemCount}
-					// key={props.key}
+					key={Array(826).keys()}
 					rowRenderer={(props) => {
 						return React.cloneElement(children[props.index], {
 							style: props.style,
@@ -59,93 +59,65 @@ function VirtualizedAutocomplete({
 	gender,
 	species,
 	charStatus,
+	idArray,
 }) {
-	// console.log(
-	// 	characters.map((i) => {
-	// 		return i.name;
-	// 	}),
-	// );
 	const [route, setRoute] = useState('home');
-	const [cName, SetCName] = useState([]);
-	const handleChange = (evt) => {
-		if (evt.type === 'click') {
-			if (evt.target.textContent) {
-				SetCName(evt.target.textContent);
-				setRoute('profile');
-				console.log(evt);
-			}
-		} else if (evt.type === 'keydown' && evt.keyCode === 13) {
-			console.log(evt);
-			evt.target.addEventListener('keyup', (evt) => {
-				if (evt.type === 'keyup' && evt.keyCode === 13) {
-					SetCName(evt.target.value);
-					setRoute('profile');
-					// console.log(evt.target.value);
-					console.log(evt);
-				}
-			});
-		}
+	const [charId, setCharId] = useState('');
+	const handleChange = (evt, newVal) => {
+		setCharId(newVal.id);
+		setRoute('profile');
 	};
-	console.log(cName);
-
-	// const [profile, setProfile] = useState([]);
-	// console.log(myKey[0]);
-	// const names = name.map((option, i) => {
-	// 	return option;
-	// });
-	// console.log(id);
-
-	// let options = id.map((i) => {
-	// 	return i;
-	// });
-
-	// console.log(myKey);
 	return (
-		<div>
+		<div className='tc'>
 			{route === 'home' ? (
-				<Autocomplete
-					{...defaultProps}
-					id={`character`}
-					// id={id}
-					// key={key}
-					style={{ width }}
-					autoHighlight
-					selectOnFocus
-					isOptionEqualToValue={(option, value) => option.name === value.name}
-					// onKeyUp={handleChange}
-					// onClick={handleChange}
-					onChange={handleChange}
-					// onInputChange={handleChange}
-					ListboxComponent={ListboxComponent}
-					// options={options}
-					// value={options}
-					// renderOption={ }
-					// componentsProps={(options.map((option)=>))}
-					renderInput={(params) => (
-						// console.log(params)
-						<TextField
-							{...params}
-							// inputProps={{
-							// 	...params.inputProps,
-							// }}
-							// id={id}
-							// key={key}
-							variant='standard'
-							label='Choose a character'
-							fullWidth
-							// InputLabelProps={{
-							// 	value: params.charName,
-							// 	id: params.inputProps.id,
-							// }}
-							// myprop={id.map((i) => {
-							// 	return console.log(i)&& i;
-							// })}
-							// value.hiddenLabel
-						/>
-					)}
-				/>
+				<div>
+					<h1 className='f1'>Rick and morty Characters list</h1>
+					<Autocomplete
+						{...defaultProps}
+						// ListboxProps={...characters}
+						// id={id}
+						// key={key}
+						style={{ width }}
+						autoHighlight
+						selectOnFocus
+						isOptionEqualToValue={(option, value) => option.name === value.name}
+						// onKeyUp={handleChange}
+						// onClick={handleChange}
+						onChange={handleChange} //main handler
+						// onSelect={handleSelect}
+						// onChange={(event, newValue) => {
+						// console.log(newValue.id);
+						// 	if (newValue.id ===)
+						// //this will give you the selected value dictionary (source)
+						// }}
+						// onInputChange={handleChange}
+						ListboxComponent={ListboxComponent}
+						// options={options}
+						// value={options}
+						// renderOption={ }
+						// componentsProps={(options.map((option)=>))}
+						// ListboxProps={{ key: characters.id }}
+						renderInput={(params) => (
+							// console.log(params)
+							<TextField
+								{...params}
+								// inputProps={{
+								// 	...params.inputProps,
+								// }}
+								// id={idArray}
+								// key={key}
+								variant='standard'
+								label='Choose a character'
+								fullWidth
+								// onSelect={handleSelect}
+								// value={val}
+								// key={charId}
+							/>
+						)}
+					/>
+				</div>
 			) : (
-				<Profile cName={cName} characters={characters} />
+				<Profile id={charId} characters={characters} />
 			)}
 		</div>
 	);

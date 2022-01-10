@@ -7,7 +7,6 @@ import _ from 'lodash';
 
 function App() {
 	const [characters, setCharacters] = useState([]);
-	// const [charactersAttributes, setCharactersAttributes] = useState([]);
 
 	//fetching all the characters in one large array using the pagination from the API
 	const fetchPages = async (url) => {
@@ -35,6 +34,7 @@ function App() {
 	// 		});
 	// };
 
+	//ComponentDidMount
 	useEffect(() => {
 		_.cloneDeep(fetchPages('https://rickandmortyapi.com/api/character'));
 	}, []);
@@ -69,11 +69,12 @@ function App() {
 		<h1>Loading</h1>
 	) : (
 		<div className='tc'>
-			<h1 className='f1'>Rick and morty Characters list</h1>
 			<VirtualizedAutocomplete
 				defaultProps={defaultProps}
 				characters={charactersWithAttributes}
-				// id={idArray}
+				// idArray={idArray}
+				// ListboxProps={idArray}
+				key={idArray.filter}
 				CharName={charactersWithAttributes.name}
 				created={charactersWithAttributes.created}
 				episode={charactersWithAttributes.episode}
