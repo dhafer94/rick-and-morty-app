@@ -72,7 +72,7 @@ function App() {
 			<VirtualizedAutocomplete
 				defaultProps={defaultProps}
 				characters={charactersWithAttributes}
-				// idArray={idArray}
+				// id={idArray}
 				// ListboxProps={idArray}
 				key={idArray.filter}
 				CharName={charactersWithAttributes.name}

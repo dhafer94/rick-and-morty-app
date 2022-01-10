@@ -22,7 +22,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 					rowHeight={itemSize}
 					overscanCount={5}
 					rowCount={itemCount}
-					key={Array(826).keys()}
+					key={keys}
 					rowRenderer={(props) => {
 						return React.cloneElement(children[props.index], {
 							style: props.style,
@@ -70,33 +70,16 @@ function VirtualizedAutocomplete({
 	return (
 		<div className='tc'>
 			{route === 'home' ? (
-				<div>
+				<div key={charId}>
 					<h1 className='f1'>Rick and morty Characters list</h1>
 					<Autocomplete
 						{...defaultProps}
-						// ListboxProps={...characters}
-						// id={id}
-						// key={key}
 						style={{ width }}
 						autoHighlight
 						selectOnFocus
 						isOptionEqualToValue={(option, value) => option.name === value.name}
-						// onKeyUp={handleChange}
-						// onClick={handleChange}
 						onChange={handleChange} //main handler
-						// onSelect={handleSelect}
-						// onChange={(event, newValue) => {
-						// console.log(newValue.id);
-						// 	if (newValue.id ===)
-						// //this will give you the selected value dictionary (source)
-						// }}
-						// onInputChange={handleChange}
 						ListboxComponent={ListboxComponent}
-						// options={options}
-						// value={options}
-						// renderOption={ }
-						// componentsProps={(options.map((option)=>))}
-						// ListboxProps={{ key: characters.id }}
 						renderInput={(params) => (
 							// console.log(params)
 							<TextField
@@ -109,6 +92,8 @@ function VirtualizedAutocomplete({
 								variant='standard'
 								label='Choose a character'
 								fullWidth
+								key={charId}
+
 								// onSelect={handleSelect}
 								// value={val}
 								// key={charId}

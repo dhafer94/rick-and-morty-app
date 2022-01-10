@@ -23,7 +23,7 @@ export default function Profile({ characters, id }) {
 
 	const charInfo = FilteredCharacters.map((character) => {
 		return (
-			<div>
+			<div key={character.id} >
 				<p id={character.id}>Name: {character.charName}</p>
 				<p id={character.id}>Species: {character.species}</p>
 				<p id={character.id}>Gender:{character.gender}</p>
