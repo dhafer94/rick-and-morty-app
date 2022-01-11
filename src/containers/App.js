@@ -2,13 +2,22 @@ import React, { useState, useEffect } from 'react';
 // import List from '../components/List';
 import './App.css';
 import VirtualizedAutocomplete from './VirtualizedAutocomplete';
-
-import _ from 'lodash';
+import { makeStyles } from '@material-ui/styles';
+import { red } from '@mui/material/colors';
 
 function App() {
 	const [characters, setCharacters] = useState([]);
 
-	//fetching all the characters in one large array using the pagination from the API
+	const useStyles = makeStyles((theme) => ({
+		root: {
+			display: 'flex',
+			flexDirection: 'row',
+			textAlign: 'center',
+			justifyContent: 'center',
+			background: '#99D8D0',
+		},
+	}));
+	//fetching all the characters in one large array using the information from the API
 	const fetchPages = async (url) => {
 		const res = await fetch(url);
 		const data = await res.json();
@@ -36,7 +45,7 @@ function App() {
 
 	//ComponentDidMount
 	useEffect(() => {
-		fetchPages('https://rickandmortyapi.com/api/character');
+		fetchPages('https://rickandmortyapi.com/api/character/');
 	}, []);
 
 	const charactersWithTheNeededAttributes = characters.map((character) => {
@@ -51,16 +60,17 @@ function App() {
 			created: character.created,
 		};
 	});
+	// console.log(charactersWithTheNeededAttributes);
+	const classes = useStyles();
 
 	return !characters.length ? (
 		<h1>Loading</h1>
 	) : (
-		<div className='tc'>
+		<div className={classes.root}>
 			<VirtualizedAutocomplete
 				defaultProps={{
 					options: charactersWithTheNeededAttributes,
-					getOptionLabel: (option) =>
-						`${option.charName} - status: ${option.charStatus}`,
+					getOptionLabel: (option) => `${option.charName}`,
 				}}
 				characters={charactersWithTheNeededAttributes}
 			/>

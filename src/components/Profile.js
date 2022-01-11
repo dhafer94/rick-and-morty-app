@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '@mui/material/Card';
-// import { makeStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 
 export default function Profile({ characters, id }) {
 	// console.log(characters[0].name);
@@ -18,12 +18,22 @@ export default function Profile({ characters, id }) {
 			created: character.created,
 		};
 	});
-
+	const useStyles = makeStyles({
+		Profile: {
+			background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+			border: 0,
+			borderRadius: 3,
+			boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+			color: 'white',
+			height: `fit-content`,
+			padding: '0 30px',
+		},
+	});
 	// console.log(character[0]);
+	const classes = useStyles();
 
 	return (
-		// <Card></Card>
-		<Card key={character[0].id}>
+		<Card className={classes.Profile} key={character[0].id}>
 			<p>Name: {character[0].charName}</p>
 			<p>Species: {character[0].species}</p>
 			<p>Gender:{character[0].gender}</p>
