@@ -11,6 +11,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableColumns from './TableColumns';
 
+//styles
 export const useStyles = makeStyles((theme) => ({
 	tableContainer: {
 		display: 'flex',
@@ -34,6 +35,7 @@ export const useStyles = makeStyles((theme) => ({
 		boxSizing: 'border-box',
 		minWidth: '100%',
 		width: '100',
+		cursor: 'pointer',
 	},
 	headerRow: {},
 	cell: {
@@ -47,11 +49,6 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	column: {},
 }));
-
-/**
- * Row component
- */
-// const Row = ;
 
 /**
  * itemKey function for returning the key prop for an item.
@@ -69,26 +66,16 @@ const createItemData = memoize((classes, columns, data) => ({
 	items: data,
 }));
 
-const ReactWindowTable = ({
-	data,
-	columns,
-	setCharId,
-	setRoute,
-	searchfield,
-}) => {
+const ReactWindowTable = ({ data, columns, setCharId, setRoute }) => {
 	const classes = useStyles();
 	const clickHandler = (evt) => {
-		// console.log(evt.target.id);
 		if (evt.target.id) {
-			// console.log(evt.target.id);
 			setCharId(Number(evt.target.id));
 			setRoute('profile');
 		}
 	};
-	// console.log(route);
 	// memoized data passed to the Row item renderer
 	const itemData = createItemData(classes, columns, data);
-	// console.log(searchfield);
 
 	return (
 		<div className={classes.tableContainer}>
@@ -107,12 +94,13 @@ const ReactWindowTable = ({
 								itemSize={48}
 								itemKey={itemKey}
 								itemData={itemData}>
+								{/* Row component */}
+
 								{({ index, style, data: { columns, items, classes } }) => {
 									const item = items[index];
 
 									return (
 										<TableRow
-											// rows rendering with the needed prop
 											onClick={clickHandler}
 											component='div'
 											className={classes.row}

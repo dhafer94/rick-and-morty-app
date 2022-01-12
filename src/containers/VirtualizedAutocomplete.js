@@ -2,11 +2,10 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { List } from 'react-virtualized';
-
 import { makeStyles } from '@material-ui/styles';
-// import { positions } from '@mui/system';
 import './VirtualizedAutocomplete.css';
 
+//styles
 const useStyles = makeStyles((theme) => ({
 	listing: {
 		display: 'flex',
@@ -20,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+//Adapter for virtualization
 const ListboxComponent = React.forwardRef(function ListboxComponent(
 	props,
 	ref,
@@ -51,24 +51,21 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 		</div>
 	);
 });
+
 function VirtualizedAutocomplete({
 	defaultProps,
 	width,
 	setRoute,
 	setCharId,
-	setSearchfield,
 	onInputchange,
 }) {
 	const classes = useStyles();
 
 	const handlechange = (evt, newVal) => {
-		// console.log(evt.target);
 		setCharId(newVal.id);
 		setRoute('profile');
 	};
 
-	// console.log(charId);
-	// return route === 'home' ? (
 	return (
 		<div className={classes.maincontainer}>
 			<h1 className={classes.title}>Rick and morty Characters list</h1>
@@ -80,36 +77,25 @@ function VirtualizedAutocomplete({
 					selectOnFocus
 					autoComplete={true}
 					isOptionEqualToValue={(option, value) => option.name === value.name}
-					onChange={handlechange} //main handler
+					//searchfield selection handler
+					onChange={handlechange}
+					//filtering through the list to show the characters based on autocomplete
 					onInputChange={(evt) => onInputchange(evt)}
 					ListboxComponent={ListboxComponent}
 					renderInput={(params) => (
-						// console.log(params)
 						<TextField
 							{...params}
 							variant='standard'
 							label='Choose a character'
-							// key={charId}
 							sx={{
 								width: 300,
 								display: 'flex',
 							}}
-							// inputProps={{ onChange: (evt) => console.log(evt.target) }}
 						/>
 					)}
 				/>
 			</div>
 		</div>
 	);
-	// ) : (
-	// 	<div>
-	// 		<ul>
-	// 			<li>
-	// 				<a href='Home'>Home</a>{' '}
-	// 			</li>
-	// 		</ul>
-	// 		<Profile id={charId} characters={defaultProps.options} />
-	// 	</div>
-	// );
 }
 export default VirtualizedAutocomplete;

@@ -108,8 +108,9 @@ function App() {
 			created: character.created,
 		};
 	});
-	// console.log(charactersWithTheNeededAttributes);
+	// styling
 	const classes = useStyles();
+
 	const columns = [
 		{
 			label: 'Name',
@@ -120,10 +121,11 @@ function App() {
 			dataKey: 'charStatus',
 		},
 	];
+	//for the autocomplete in the virtualized table component
 	const handleInputChange = (evt) => {
-		// console.log(evt.target.value);
 		setSearchfield(evt.target.value);
 	};
+	//comparing the table items agains the typed text to show the corresponding rows
 	const searchfieldFilter = charactersWithTheNeededAttributes.filter(
 		(character) => {
 			if (
@@ -142,7 +144,6 @@ function App() {
 			}
 		},
 	);
-
 	return route === 'home' && !charId ? (
 		<div className={classes.root}>
 			<VirtualizedAutocomplete
@@ -182,6 +183,7 @@ function App() {
 			)}
 		</div>
 	) : (
+		//rendering the selecting character based on the searchfield choice or table click
 		<div>
 			<Profile id={charId} characters={charactersWithTheNeededAttributes} />
 		</div>

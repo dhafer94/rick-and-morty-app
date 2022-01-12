@@ -3,9 +3,8 @@ import Card from '@mui/material/Card';
 import { makeStyles } from '@mui/styles';
 
 export default function Profile({ characters, id }) {
-	// console.log(characters);
+	// here we filter the id that was passed from the parent state to render the child accordingly
 	const characterFilter = characters.filter((character) => character.id === id);
-	// console.log(characterFilter);
 
 	const character = characterFilter.map((character) => {
 		return {
@@ -30,7 +29,6 @@ export default function Profile({ characters, id }) {
 			padding: '0 30px',
 		},
 	});
-	// console.log(character[0]);
 	const classes = useStyles();
 
 	return (
