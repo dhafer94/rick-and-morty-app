@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { List } from 'react-virtualized';
-import Profile from '../components/Profile';
 
 import { makeStyles } from '@material-ui/styles';
 // import { positions } from '@mui/system';
@@ -52,14 +51,22 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 		</div>
 	);
 });
-function VirtualizedAutocomplete({ defaultProps, width, setRoute, setCharId }) {
+function VirtualizedAutocomplete({
+	defaultProps,
+	width,
+	setRoute,
+	setCharId,
+	setSearchfield,
+	onInputchange,
+}) {
 	const classes = useStyles();
 
-	function handlechange(evt, newVal) {
-		// console.log('works');
+	const handlechange = (evt, newVal) => {
+		// console.log(evt.target);
 		setCharId(newVal.id);
 		setRoute('profile');
-	}
+	};
+
 	// console.log(charId);
 	// return route === 'home' ? (
 	return (
@@ -71,8 +78,10 @@ function VirtualizedAutocomplete({ defaultProps, width, setRoute, setCharId }) {
 					sx={{ width }}
 					autoHighlight
 					selectOnFocus
+					autoComplete={true}
 					isOptionEqualToValue={(option, value) => option.name === value.name}
 					onChange={handlechange} //main handler
+					onInputChange={(evt) => onInputchange(evt)}
 					ListboxComponent={ListboxComponent}
 					renderInput={(params) => (
 						// console.log(params)
@@ -85,6 +94,7 @@ function VirtualizedAutocomplete({ defaultProps, width, setRoute, setCharId }) {
 								width: 300,
 								display: 'flex',
 							}}
+							// inputProps={{ onChange: (evt) => console.log(evt.target) }}
 						/>
 					)}
 				/>

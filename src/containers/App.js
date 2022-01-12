@@ -6,9 +6,13 @@ import { makeStyles } from '@material-ui/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import ReactWindowTable from '../components/ReactWindowTable/ReactWindowTable';
+
 import Profile from '../components/Profile';
 function App() {
 	const [characters, setCharacters] = useState([]);
+	const [route, setRoute] = useState('home');
+	const [charId, setCharId] = useState('');
+	const [searchfield, setSearchfield] = useState('');
 
 	const useStyles = makeStyles((theme) => ({
 		root: {
@@ -116,18 +120,29 @@ function App() {
 			dataKey: 'charStatus',
 		},
 	];
-	const [route, setRoute] = useState('home');
-	const [charId, setCharId] = useState('');
+	const handleInputChange = (evt) => {
+		// console.log(evt.target.value);
+		setSearchfield(evt.target.value);
+	};
+	const searchfieldFilter = charactersWithTheNeededAttributes.filter(
+		(character) => {
+			if (
+				character.charName.toLowerCase().includes(searchfield.toLowerCase())
+			) {
+				return {
+					id: character.id,
+					charName: character.charName,
+					charStatus: character.charStatus,
+					species: character.species,
+					gender: character.gender,
+					charLocation: character.charLocation,
+					episode: character.episode,
+					created: character.created,
+				};
+			}
+		},
+	);
 
-	// const handleChange = (evt, newVal) => {
-	// 	setCharId(newVal.id);
-	// 	setRoute('profile');
-	// };
-	// console.log(route);
-	// return !characters.length ? (
-	// 	<h1>Loading</h1>
-	// ) : (
-	const onInputchange = (evt) => {};
 	return route === 'home' && !charId ? (
 		<div className={classes.root}>
 			<VirtualizedAutocomplete
@@ -136,30 +151,41 @@ function App() {
 					getOptionLabel: (option) => `${option.charName}`,
 				}}
 				characters={charactersWithTheNeededAttributes}
-				// handleclick={}
-				// handle={(evt, newVal) => handleChange}
 				setRoute={setRoute}
 				setCharId={setCharId}
-				onInputchange={onInputchange}
+				onInputchange={handleInputChange}
 			/>
-			<Container maxWidth='lg' className={classes.container}>
-				<Paper className={classes.paper}>
-					<ReactWindowTable
-						data={charactersWithTheNeededAttributes}
-						columns={columns}
-						characters={charactersWithTheNeededAttributes}
-						setCharId={setCharId}
-					/>
-				</Paper>
-			</Container>
+			{searchfield === '' ? (
+				<Container maxWidth='lg' className={classes.container}>
+					<Paper className={classes.paper}>
+						<ReactWindowTable
+							data={charactersWithTheNeededAttributes}
+							columns={columns}
+							characters={charactersWithTheNeededAttributes}
+							setCharId={setCharId}
+							searchfield={searchfield}
+						/>
+					</Paper>
+				</Container>
+			) : (
+				<Container maxWidth='lg' className={classes.container}>
+					<Paper className={classes.paper}>
+						<ReactWindowTable
+							data={searchfieldFilter}
+							columns={columns}
+							characters={searchfieldFilter}
+							setCharId={setCharId}
+							searchfield={searchfield}
+						/>
+					</Paper>
+				</Container>
+			)}
 		</div>
 	) : (
 		<div>
 			<Profile id={charId} characters={charactersWithTheNeededAttributes} />
 		</div>
 	);
-
-	// );
 }
 
 export default App;

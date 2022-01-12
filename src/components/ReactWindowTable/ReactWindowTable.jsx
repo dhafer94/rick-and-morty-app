@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
-
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList as List } from 'react-window';
 import memoize from 'memoize-one';
-
 import { makeStyles } from '@material-ui/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-
 import TableColumns from './TableColumns';
-import Profile from '../Profile';
 
 export const useStyles = makeStyles((theme) => ({
 	tableContainer: {
@@ -76,18 +72,14 @@ const createItemData = memoize((classes, columns, data) => ({
 const ReactWindowTable = ({
 	data,
 	columns,
-	characters,
 	setCharId,
 	setRoute,
+	searchfield,
 }) => {
 	const classes = useStyles();
 	const clickHandler = (evt) => {
 		// console.log(evt.target.id);
 		if (evt.target.id) {
-			console.log(evt.target.id);
-			setCharId(Number(evt.target.id));
-			setRoute('profile');
-		} else if (evt.target.id) {
 			// console.log(evt.target.id);
 			setCharId(Number(evt.target.id));
 			setRoute('profile');
@@ -96,8 +88,8 @@ const ReactWindowTable = ({
 	// console.log(route);
 	// memoized data passed to the Row item renderer
 	const itemData = createItemData(classes, columns, data);
+	// console.log(searchfield);
 
-	// return route === 'home' ? (
 	return (
 		<div className={classes.tableContainer}>
 			<Table className={classes.table} component='div'>
@@ -120,6 +112,7 @@ const ReactWindowTable = ({
 
 									return (
 										<TableRow
+											// rows rendering with the needed prop
 											onClick={clickHandler}
 											component='div'
 											className={classes.row}
@@ -154,16 +147,6 @@ const ReactWindowTable = ({
 			</Table>
 		</div>
 	);
-	// ) : (
-	// 	<div>
-	// 		<ul>
-	// 			<li>
-	// 				<a href='Home'>Home</a>{' '}
-	// 			</li>
-	// 		</ul>
-	// 		<Profile id={charId} characters={characters} />
-	// 	</div>
-	// );
 };
 
 export default ReactWindowTable;
