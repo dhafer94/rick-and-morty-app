@@ -3,9 +3,10 @@ import Card from '@mui/material/Card';
 import { makeStyles } from '@mui/styles';
 
 export default function Profile({ characters, id }) {
-	// console.log(characters[0].name);
+	// console.log(characters);
 	const characterFilter = characters.filter((character) => character.id === id);
-	// console.log(characterFilter[0]);
+	// console.log(characterFilter);
+
 	const character = characterFilter.map((character) => {
 		return {
 			id: character.id,
@@ -33,14 +34,20 @@ export default function Profile({ characters, id }) {
 	const classes = useStyles();
 
 	return (
-		<Card className={classes.Profile} key={character[0].id}>
-			<p>Name: {character[0].charName}</p>
-			<p>Species: {character[0].species}</p>
-			<p>Gender:{character[0].gender}</p>
-			<p>Location: {character[0].charLocation}</p>
-			<p>Episode: {character[0].episode}</p>
-			<p>Status: {character[0].charStatus}</p>
-			<p>Created: {character[0].created}</p>
-		</Card>
+		<div>
+			<h2>
+				{' '}
+				<a href='home'>Home</a>{' '}
+			</h2>
+			<Card className={classes.Profile} key={character[0].id}>
+				<p>Name: {character[0].charName}</p>
+				<p>Species: {character[0].species}</p>
+				<p>Gender:{character[0].gender}</p>
+				<p>Location: {character[0].charLocation}</p>
+				<p>Episode: {character[0].episode}</p>
+				<p>Status: {character[0].charStatus}</p>
+				<p>Created: {character[0].created}</p>
+			</Card>
+		</div>
 	);
 }

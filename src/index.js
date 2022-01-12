@@ -8,8 +8,38 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/styles";
 
 
-const theme = createTheme();
-
+const theme = createTheme({
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        html: {
+          padding: 0,
+          margin: 0
+        },
+        body: {
+          background: '#00b0c8',
+          height: '100%',
+          padding: 0,
+          margin: 0
+        },
+        h1: {
+          color: '#363636'
+        },
+        "*::-webkit-scrollbar": {
+          width: "15px"
+        },
+        "*::-webkit-scrollbar-track": {
+          background: "#E4EFEF"
+        },
+        "*::-webkit-scrollbar-thumb": {
+          background: "#1D388F61",
+          borderRadius: "2px",
+          height: '20px'
+        }
+      }
+    }
+  }
+});
 
 ReactDOM.render(
 

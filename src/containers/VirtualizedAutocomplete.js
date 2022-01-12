@@ -3,43 +3,21 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { List } from 'react-virtualized';
 import Profile from '../components/Profile';
-import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
-import Toolbar from '@material-ui/core/Toolbar';
-import ReactWindowTable from '../components/ReactWindowTable/ReactWindowTable';
+
 import { makeStyles } from '@material-ui/styles';
 // import { positions } from '@mui/system';
 import './VirtualizedAutocomplete.css';
 
 const useStyles = makeStyles((theme) => ({
-	mainContainer: {
-		display: 'block',
-		flexDirection: 'row',
+	listing: {
+		display: 'flex',
 		textAlign: 'center',
-		margin: 0,
-		padding: 0,
-	},
-	container: {
-		// flexGrow: 1,
-		height: 600,
-		background: '#99D8D0',
+		background: 'white',
+		flex: 'column-reverse',
 	},
 	title: {
 		fontSize: '60px',
 		textAlign: 'center',
-	},
-	paper: {
-		height: '100%',
-		display: 'flex',
-		flexDirection: 'column',
-		background: '#B7EFCD',
-	},
-	toolbar: {
-		paddingLeft: theme.spacing(8),
-		paddingRight: theme.spacing(4),
-	},
-	spacer: {
-		flex: '1 1 100%',
 	},
 }));
 
@@ -74,70 +52,54 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 		</div>
 	);
 });
-function VirtualizedAutocomplete({ characters, defaultProps, width }) {
-	const [route, setRoute] = useState('home');
-	const [charId, setCharId] = useState('');
-	const columns = [
-		{
-			label: 'Name',
-			dataKey: 'charName',
-		},
-		{
-			label: 'Status',
-			dataKey: 'charStatus',
-		},
-	];
-
+function VirtualizedAutocomplete({ defaultProps, width, setRoute, setCharId }) {
 	const classes = useStyles();
 
-	const handleChange = (evt, newVal) => {
+	function handlechange(evt, newVal) {
+		// console.log('works');
 		setCharId(newVal.id);
 		setRoute('profile');
-	};
-	// console.log(characters);
-	return route === 'home' ? (
-		<div className={classes.mainContainer} key={charId}>
+	}
+	// console.log(charId);
+	// return route === 'home' ? (
+	return (
+		<div className={classes.maincontainer}>
 			<h1 className={classes.title}>Rick and morty Characters list</h1>
-			<Autocomplete
-				{...defaultProps}
-				sx={{ width: 300 }}
-				autoHighlight
-				selectOnFocus
-				isOptionEqualToValue={(option, value) => option.name === value.name}
-				onChange={handleChange} //main handler
-				ListboxComponent={ListboxComponent}
-				renderInput={(params) => (
-					// console.log(params)
-					<TextField
-						{...params}
-						variant='standard'
-						label='Choose a character'
-						key={charId}
-						sx={{
-							width: 300,
-							display: 'flex',
-						}}
-					/>
-				)}
-			/>
-			<Container maxWidth='lg' className={classes.container}>
-				<Paper className={classes.paper}>
-					<Toolbar className={classes.toolbar}>
-						<div className={classes.spacer} />
-					</Toolbar>
-					<ReactWindowTable data={characters} columns={columns} />
-				</Paper>
-			</Container>
-		</div>
-	) : (
-		<div>
-			<ul>
-				<li>
-					<a href='Home'>Home</a>{' '}
-				</li>
-			</ul>
-			<Profile id={charId} characters={characters} />
+			<div className={classes.listing}>
+				<Autocomplete
+					{...defaultProps}
+					sx={{ width }}
+					autoHighlight
+					selectOnFocus
+					isOptionEqualToValue={(option, value) => option.name === value.name}
+					onChange={handlechange} //main handler
+					ListboxComponent={ListboxComponent}
+					renderInput={(params) => (
+						// console.log(params)
+						<TextField
+							{...params}
+							variant='standard'
+							label='Choose a character'
+							// key={charId}
+							sx={{
+								width: 300,
+								display: 'flex',
+							}}
+						/>
+					)}
+				/>
+			</div>
 		</div>
 	);
+	// ) : (
+	// 	<div>
+	// 		<ul>
+	// 			<li>
+	// 				<a href='Home'>Home</a>{' '}
+	// 			</li>
+	// 		</ul>
+	// 		<Profile id={charId} characters={defaultProps.options} />
+	// 	</div>
+	// );
 }
 export default VirtualizedAutocomplete;

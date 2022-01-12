@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 
 import AutoSizer from 'react-virtualized-auto-sizer';
@@ -12,9 +12,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-// import { ROW_SIZE } from '../constants';
-
 import TableColumns from './TableColumns';
+import Profile from '../Profile';
 
 export const useStyles = makeStyles((theme) => ({
 	tableContainer: {
@@ -29,6 +28,7 @@ export const useStyles = makeStyles((theme) => ({
 	thead: {},
 	tbody: {
 		width: '100%',
+		background: 'red',
 	},
 	row: {
 		display: 'flex',
@@ -37,7 +37,7 @@ export const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		boxSizing: 'border-box',
 		minWidth: '100%',
-		width: '100%',
+		width: '100',
 	},
 	headerRow: {},
 	cell: {
@@ -55,33 +55,7 @@ export const useStyles = makeStyles((theme) => ({
 /**
  * Row component
  */
-const Row = ({ index, style, data: { columns, items, classes } }) => {
-	const item = items[index];
-
-	return (
-		<TableRow component='div' className={classes.row} style={style}>
-			{columns.map((column, colIndex) => {
-				return (
-					<TableCell
-						key={item.id + colIndex}
-						component='div'
-						variant='body'
-						align={column.numeric || false ? 'right' : 'left'}
-						className={clsx(
-							classes.cell,
-							!column.width && classes.expandingCell,
-						)}
-						style={{
-							flexBasis: column.width || false,
-							height: 48,
-						}}>
-						{item[column.dataKey]}
-					</TableCell>
-				);
-			})}
-		</TableRow>
-	);
-};
+// const Row = ;
 
 /**
  * itemKey function for returning the key prop for an item.
@@ -98,13 +72,32 @@ const createItemData = memoize((classes, columns, data) => ({
 	classes,
 	items: data,
 }));
-const ReactWindowTable = ({ data, columns }) => {
-	const classes = useStyles();
-	// console.log(data);
 
+const ReactWindowTable = ({
+	data,
+	columns,
+	characters,
+	setCharId,
+	setRoute,
+}) => {
+	const classes = useStyles();
+	const clickHandler = (evt) => {
+		// console.log(evt.target.id);
+		if (evt.target.id) {
+			console.log(evt.target.id);
+			setCharId(Number(evt.target.id));
+			setRoute('profile');
+		} else if (evt.target.id) {
+			// console.log(evt.target.id);
+			setCharId(Number(evt.target.id));
+			setRoute('profile');
+		}
+	};
+	// console.log(route);
 	// memoized data passed to the Row item renderer
 	const itemData = createItemData(classes, columns, data);
 
+	// return route === 'home' ? (
 	return (
 		<div className={classes.tableContainer}>
 			<Table className={classes.table} component='div'>
@@ -122,7 +115,38 @@ const ReactWindowTable = ({ data, columns }) => {
 								itemSize={48}
 								itemKey={itemKey}
 								itemData={itemData}>
-								{Row}
+								{({ index, style, data: { columns, items, classes } }) => {
+									const item = items[index];
+
+									return (
+										<TableRow
+											onClick={clickHandler}
+											component='div'
+											className={classes.row}
+											style={style}>
+											{columns.map((column, colIndex) => {
+												return (
+													<TableCell
+														id={item.id}
+														key={item.id + colIndex}
+														component='div'
+														variant='body'
+														align={column.numeric || false ? 'right' : 'left'}
+														className={clsx(
+															classes.cell,
+															!column.width && classes.expandingCell,
+														)}
+														style={{
+															flexBasis: column.width || false,
+															height: 48,
+														}}>
+														{item[column.dataKey]}
+													</TableCell>
+												);
+											})}
+										</TableRow>
+									);
+								}}
 							</List>
 						)}
 					</AutoSizer>
@@ -130,6 +154,16 @@ const ReactWindowTable = ({ data, columns }) => {
 			</Table>
 		</div>
 	);
+	// ) : (
+	// 	<div>
+	// 		<ul>
+	// 			<li>
+	// 				<a href='Home'>Home</a>{' '}
+	// 			</li>
+	// 		</ul>
+	// 		<Profile id={charId} characters={characters} />
+	// 	</div>
+	// );
 };
 
 export default ReactWindowTable;
