@@ -12,21 +12,19 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		textAlign: 'center',
-		borderRadius: 20
-
+		borderRadius: 20,
 	},
 
 	autocomplete: {
-		display: 'inline',
+		display: 'flex',
 		textAlign: 'center',
-		background: 'white',
-		// flex: 'column',
+		// background: 'white',
+		flex: 'column',
 		width: 'fit-content',
-		// marginLeft: '20'
+		// marginLeft: '50%'
 		// position: 'absolute',
 		// top: '16%',
 		// left: '25%',
-
 	},
 	title: {
 		fontSize: '60px',
@@ -48,7 +46,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 			<div {...other}>
 				<List
 					height={250}
-					width={480}
+					width={400}
 					rowHeight={itemSize}
 					overscanCount={5}
 					rowCount={itemCount}
@@ -100,7 +98,7 @@ function VirtualizedAutocomplete({
 					variant='standard'
 					label='Choose a character'
 					sx={{
-						width: 480,
+						width: 400,
 						display: 'flex',
 					}}
 				/>

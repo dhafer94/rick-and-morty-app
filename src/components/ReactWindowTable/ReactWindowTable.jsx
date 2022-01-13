@@ -16,16 +16,24 @@ export const useStyles = makeStyles((theme) => ({
 	tableContainer: {
 		display: 'flex',
 		flex: 1,
+		border: '1px solid #363636',
+		borderRadius: '5px',
 	},
 	table: {
 		height: '100%',
 		width: '100%',
 	},
 	list: {},
-	thead: {},
+	thead: {
+		background: '#FFBCBC',
+		border: '1.5px solid #363636',
+		borderRadius: '20px',
+	},
 	tbody: {
 		width: '100%',
-		background: 'red',
+		// background: 'red',
+		border: '1px solid purple',
+		borderRadius: '20px',
 	},
 	row: {
 		display: 'flex',
@@ -43,11 +51,15 @@ export const useStyles = makeStyles((theme) => ({
 		flexGrow: 0,
 		flexShrink: 0,
 		textAlign: 'center',
+		borderBottom: '1px solid #363636',
 	},
 	expandingCell: {
 		flex: 1,
 	},
-	column: {},
+	column: {
+		border: '1px solid #363636',
+		borderRight: 'none',
+	},
 }));
 
 /**

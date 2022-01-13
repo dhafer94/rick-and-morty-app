@@ -1,0 +1,45 @@
+/* .paper {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	background: #a5fc94;
+}
+.root {
+	display: flex;
+	padding-left: 25%;
+	flex-direction: column;
+	text-align: center;
+	justify-content: center;
+	background: #00b0c8;
+	height: 100%;
+	width: 100%;
+}
+.logo {
+	width: 20%;
+	margin-left: 25%;
+}
+.container {
+	flex-grow: 1;
+	height: 100%;
+	width: 50%;
+	padding: 0;
+	display: flex;
+}
+.listing {
+	display: flex;
+	text-align: center;
+	background: white;
+	flex: column;
+}
+*::-webkit-scrollbar {
+	width: 15px;
+}
+*::-webkit-scrollbar-track {
+	background: #e4efef;
+}
+*::-webkit-scrollbar-thumb {
+	background: #1d388f61;
+	border-radius: 2px;
+	height: 20px;
+} */

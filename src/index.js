@@ -15,7 +15,7 @@ const theme = createTheme({
         html: {
           fontFamily: 'Playfair Display, serif',
           padding: 0,
-          margin: 0,
+          margin: 'auto 0',
           textAlign: 'center'
         },
         body: {

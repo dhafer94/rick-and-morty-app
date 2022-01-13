@@ -5,6 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import ReactWindowTable from '../components/ReactWindowTable/ReactWindowTable';
 import Profile from '../components/Profile/Profile';
 import { makeStyles } from '@material-ui/styles';
+import Grid from '@mui/material/Grid';
+
 // import './App.css';
 
 function App() {
@@ -16,7 +18,7 @@ function App() {
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			fontFamily: 'Playfair Display, serif',
-			display: 'flex',
+			display: 'grid',
 			padding: 0,
 			margin: 0,
 			flexDirection: 'column',
@@ -27,21 +29,26 @@ function App() {
 			width: '100%',
 		},
 		logo: {
-			width: '20%',
+			width: 300,
+			marginLeft: '20%',
 		},
+		logoSection: {
+			display: 'flex',
+			flexDirection: 'row',
+			flexWrap: 'nowrap',
+			maxWidth: '30%',
+			marginLeft: '5%',
+			marginTop: '1.5%',
+		},
+		listSection: { display: 'flex', flexDirection: 'row' },
 		h1: {
 			color: '#363636',
 		},
-		'*::-webkit-scrollbar': {
-			width: '15px',
-		},
-		'*::-webkit-scrollbar-track': {
-			background: '#E4EFEF',
-		},
-		'*::-webkit-scrollbar-thumb': {
-			background: '#1D388F61',
-			borderRadius: '2px',
-			height: '20px',
+		title: {
+			fontSize: '60px',
+			textAlign: 'center',
+			maxWidth: '50%',
+			marginTop: '30%',
 		},
 		listing: {
 			fontFamily: 'Playfair Display, serif',
@@ -51,16 +58,13 @@ function App() {
 			flex: 'column',
 		},
 		container: {
+			flex: 'row',
 			flexGrow: 1,
-			height: 500,
+			height: '35rem',
 			width: '50%',
 			padding: 0,
-			display: 'inline',
 		},
-		title: {
-			fontSize: '60px',
-			textAlign: 'center',
-		},
+
 		paper: {
 			height: '100%',
 			width: '100%',
@@ -150,43 +154,60 @@ function App() {
 	);
 	return route === 'home' && !charId ? (
 		<div className={classes.root}>
-			<img className={classes.logo} src={require('./logo.png')} alt='logo' />
-			<h1 className={classes.title}>Rick and morty Characters list</h1>
+			<Grid container className={classes.logoSection}>
+				<Grid item xs={12}>
+					<img
+						className={classes.logo}
+						src={require('./logo.png')}
+						alt='logo'
+					/>
+				</Grid>
+				<Grid item xs={12}>
+					<VirtualizedAutocomplete
+						defaultProps={{
+							options: charactersWithTheNeededAttributes,
+							getOptionLabel: (option) => `${option.charName}`,
+						}}
+						characters={charactersWithTheNeededAttributes}
+						setRoute={setRoute}
+						setCharId={setCharId}
+						onInputchange={handleInputChange}
+					/>
+				</Grid>
+			</Grid>
 
-			<VirtualizedAutocomplete
-				defaultProps={{
-					options: charactersWithTheNeededAttributes,
-					getOptionLabel: (option) => `${option.charName}`,
-				}}
-				characters={charactersWithTheNeededAttributes}
-				setRoute={setRoute}
-				setCharId={setCharId}
-				onInputchange={handleInputChange}
-			/>
 			{searchfield === '' ? (
-				<Container maxWidth='lg' className={classes.container}>
-					<Paper className={classes.paper}>
-						<ReactWindowTable
-							data={charactersWithTheNeededAttributes}
-							columns={columns}
-							characters={charactersWithTheNeededAttributes}
-							setCharId={setCharId}
-							searchfield={searchfield}
-						/>
-					</Paper>
-				</Container>
+				<Grid item xs={12} className={classes.listSection}>
+					{' '}
+					<h1 className={classes.title}>Rick and morty Characters list</h1>
+					<Container maxWidth='lg' className={classes.container}>
+						<Paper className={classes.paper}>
+							<ReactWindowTable
+								data={charactersWithTheNeededAttributes}
+								columns={columns}
+								characters={charactersWithTheNeededAttributes}
+								setCharId={setCharId}
+								searchfield={searchfield}
+							/>
+						</Paper>
+					</Container>
+				</Grid>
 			) : (
-				<Container maxWidth='lg' className={classes.container}>
-					<Paper className={classes.paper}>
-						<ReactWindowTable
-							data={searchfieldFilter}
-							columns={columns}
-							characters={searchfieldFilter}
-							setCharId={setCharId}
-							searchfield={searchfield}
-						/>
-					</Paper>
-				</Container>
+				<Grid container className={classes.listSection}>
+					{' '}
+					<h1 className={classes.title}>Rick and morty Characters list</h1>
+					<Container maxWidth='lg' className={classes.container}>
+						<Paper className={classes.paper}>
+							<ReactWindowTable
+								data={searchfieldFilter}
+								columns={columns}
+								characters={searchfieldFilter}
+								setCharId={setCharId}
+								searchfield={searchfield}
+							/>
+						</Paper>
+					</Container>
+				</Grid>
 			)}
 		</div>
 	) : (
