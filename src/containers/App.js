@@ -9,16 +9,23 @@ import Grid from '@mui/material/Grid';
 import FacebookLogin from 'react-facebook-login';
 import HomeIcon from '@mui/icons-material/Home';
 import useLocalStorage from '../useLocalStorage';
+import { Avatar, Card } from '@mui/material';
+import { height } from '@mui/system';
 
 // import './App.css';
-
 function App() {
-	const [characters, setCharacters] = useLocalStorage('characters', []);
-	const [route, setRoute] = useLocalStorage('route', 'home');
-	const [charId, setCharId] = useLocalStorage('charID', '');
-	const [searchfield, setSearchfield] = useLocalStorage('searchfield', '');
+	const [characters, setCharacters] = useState([]);
+	const [route, setRoute] = useState('home');
+	const [charId, setCharId] = useState(0);
+	const [searchfield, setSearchfield] = useState('');
+	const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
+	const [userId, setUserId] = useLocalStorage('userdD', 0);
+	const [userName, setUserName] = useLocalStorage('userName', '');
+	// const [userEmail, setUserEmail] = useLocalStorage('userEmail', '');
+	const [userPicture, setUserPicture] = useLocalStorage('userPicture', '');
+	const [likedChars, setLikedChars] = useLocalStorage('likedChars', []);
+	const [agreed, setAgreed] = useState(false);
 
-	console.log(characters);
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			fontFamily: 'Playfair Display, serif',
@@ -32,22 +39,6 @@ function App() {
 			height: '100%',
 			width: '100%',
 		},
-		// image1: {
-		// 	position: 'absolute',
-		// 	height: '100%',
-		// 	width: '15%',
-		// 	opacity: '60%',
-		// 	// transform: 'scaleX(-1)',
-		// },
-		// image2: {
-		// 	position: 'absolute',
-		// 	right: 0,
-		// 	height: '100%',
-		// 	width: '10rem',
-		// 	opacity: '60%',
-		// 	// transform: 'scaleX(-1)',
-		// },
-
 		nav: {
 			display: 'flex',
 			flexDirection: 'row',
@@ -63,35 +54,22 @@ function App() {
 			display: 'flex',
 			flexDirection: 'row',
 			margin: '0 5%',
-			// flexWrap: 'nowrap',
-			// maxWidth: '30%',
-			// marginLeft: '10%',
-			// marginBottom: '1%',
 		},
 		listSection: { display: 'flex', flexDirection: 'row' },
 		titlecontainer: {
 			display: 'flex',
 			flexDirection: 'column',
 			width: '50%',
-			marginTop: '11rem',
-			marginBottom: '10rem',
+			// marginTop: '11rem',
+			// marginBottom: '10rem',
 		},
 		h1: {
 			color: '#363636',
 		},
-		fbIcon: {
-			// position: 'absolute',
-			// display: 'block',
-			// marginLeft: '200%',
-		},
-
 		title: {
 			fontSize: '50px',
 			textAlign: 'center',
 			maxWidth: '100%',
-			// marginTop: '30%',
-			// marginLeft: '20%',
-			// marginBottom: '5%',
 		},
 		listing: {
 			fontFamily: 'Playfair Display, serif',
@@ -106,9 +84,8 @@ function App() {
 			height: '30rem',
 			width: '50%',
 			padding: '0 5%',
-			paddingBottom: '1%',
+			// paddingBottom: '1%',
 		},
-
 		paper: {
 			height: '100%',
 			width: '100%',
@@ -119,6 +96,24 @@ function App() {
 		card: {
 			width: 'fit-content',
 		},
+		profilePaper: {
+			display: 'flex',
+			width: '50%',
+			marginLeft: '20%',
+			height: '10rem',
+			backgroundColor: '#A267AC',
+		},
+		ava: {
+			width: '100%',
+			// height: '50%',
+			margin: 30,
+		},
+		profileInfo: {
+			backgroundColor: '#A267AC',
+			color: '#fff',
+		},
+		profileName: { backgroundColor: '#A267AC', color: '#fff' },
+		profileLink: { backgroundColor: '#A267AC', color: '#fff' },
 	}));
 
 	//fetching all the characters in one large array using the information from the API
@@ -132,21 +127,6 @@ function App() {
 			fetchPages(data.info.next);
 		}
 	};
-
-	// This can be done without the syntactic sugar as well
-	// const fetchPages = (url) => {
-	// 	fetch(url)
-	// 		.then((res) => res.json())
-	// 		.then((data) => {
-	// 			setCharacters((characters) => {
-	// 				return [...characters, ...data.results];
-	// 			});
-	// 			if (data.info && data.info.next) {
-	// 				fetchPages(data.info.next);
-	// 			}
-	// 		});
-	// };
-
 	//ComponentDidMount
 	useEffect(() => {
 		fetchPages('https://rickandmortyapi.com/api/character/');
@@ -164,6 +144,7 @@ function App() {
 			created: character.created,
 		};
 	});
+
 	// styling
 	const classes = useStyles();
 
@@ -177,11 +158,14 @@ function App() {
 			dataKey: 'charStatus',
 		},
 	];
+
 	//for the autocomplete in the virtualized table component
 	const handleInputChange = (evt) => {
 		let item = evt.target.value;
 		setSearchfield(item);
 	};
+	// console.log(likedChars);
+
 	//comparing the table items agains the typed text to show the corresponding rows
 	const searchfieldFilter = charactersWithTheNeededAttributes.filter(
 		(character) => {
@@ -199,6 +183,24 @@ function App() {
 			}
 		},
 	);
+	const componentClicked = () => {
+		console.log('clicked');
+	};
+	const responseFacebook = (res) => {
+		console.log(res);
+		setUserId(res.id);
+		setUserName(res.name);
+		// setUserEmail(res.email);
+		setUserPicture(res.picture.data.url);
+		setIsLoggedIn(true);
+	};
+
+	//here we will filter through to look for the characters he like
+	// const agreedFunc = () => {
+	// 	setAgreed('true');
+	// 	setRoute('profile');
+	// };
+
 	return route === 'home' && !charId ? (
 		<div className={classes.root}>
 			<Grid container className={classes.nav}>
@@ -236,23 +238,44 @@ function App() {
 			{searchfield === '' ? (
 				<Grid container>
 					<Grid item xs={6}>
-						<Grid container xs={12} className={classes.titlecontainer}>
+						<Grid container className={classes.titlecontainer}>
 							<Grid className={classes.titleGrid} item xs={12}>
 								<h1 className={classes.title}>
 									Rick and morty Characters list
 								</h1>
 							</Grid>
+
 							<Grid item xs={12}>
-								<FacebookLogin
-									size={'small'}
-									className={classes.fbIcon}
-									appId='1088597931155576'
-									autoLoad={true}
-									fields='name,email,picture'
-									// callback={responseFacebook}
-									// cssClass='my-facebook-button-class'
-									// icon={<FacebookIcon />}
-								/>
+								{isLoggedIn ? (
+									<Paper className={classes.profilePaper} key={userId}>
+										<Avatar
+											className={classes.ava}
+											alt='user'
+											src={userPicture}
+										/>
+										<Card className={classes.profileCard}>
+											<h3 className={classes.profileName}>{userName}</h3>
+											<h2
+												className={
+													classes.profileInfo
+												}>{`you liked ${likedChars.length} characters`}</h2>
+											<a
+												className={classes.profileLink}
+												// onClick={agreedFunc}
+											>
+												click here if you would like to see them
+											</a>
+										</Card>
+									</Paper>
+								) : (
+									<FacebookLogin
+										appId='180235034300658'
+										autoLoad={true}
+										fields='name,email,picture'
+										onClick={componentClicked}
+										callback={responseFacebook}
+									/>
+								)}
 							</Grid>
 						</Grid>
 					</Grid>
@@ -273,23 +296,22 @@ function App() {
 			) : (
 				<Grid container>
 					<Grid item xs={6}>
-						<Grid container xs={12} className={classes.titlecontainer}>
+						<Grid container className={classes.titlecontainer}>
 							<Grid className={classes.titleGrid} item xs={12}>
 								<h1 className={classes.title}>
 									Rick and morty Characters list
 								</h1>
 							</Grid>
 							<Grid item xs={12}>
-								<FacebookLogin
-									size={'small'}
-									className={classes.fbIcon}
-									appId='1088597931155576'
-									autoLoad={true}
-									fields='name,email,picture'
-									// callback={responseFacebook}
-									// cssClass='my-facebook-button-class'
-									// icon={<FacebookIcon />}
-								/>
+								{isLoggedIn ? null : (
+									<FacebookLogin
+										appId='180235034300658'
+										autoLoad={true}
+										fields='name,email,picture'
+										onClick={componentClicked}
+										callback={responseFacebook}
+									/>
+								)}{' '}
 							</Grid>
 						</Grid>
 					</Grid>
@@ -328,6 +350,11 @@ function App() {
 				className={classes.card}
 				id={charId}
 				characters={charactersWithTheNeededAttributes}
+				likedChars={likedChars}
+				SetLikedChars={setLikedChars}
+				userID={userId}
+				isLoggedIn={isLoggedIn}
+				agreed={agreed}
 			/>
 		</div>
 	);

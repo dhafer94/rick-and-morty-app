@@ -4,7 +4,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { List } from 'react-virtualized';
 import { makeStyles } from '@material-ui/styles';
 import './VirtualizedAutocomplete.css';
-import { borderRadius } from '@mui/system';
 
 //styles
 const useStyles = makeStyles((theme) => ({

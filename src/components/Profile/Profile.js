@@ -7,8 +7,16 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import VirtualizedAutocomplete from '../VirtualizedAutocomplete/VirtualizedAutocomplete';
 
-export default function Profile({ characters, id }) {
+export default function Profile({
+	characters,
+	id,
+	likedChars,
+	// setLikedChars,
+	// isLoggedIn,
+	agreed,
+}) {
 	// here we filter the id that was passed from the parent state to render the child accordingly
 	const characterFilter = characters.filter((character) => character.id === id);
 
@@ -58,10 +66,32 @@ export default function Profile({ characters, id }) {
 		},
 	});
 	const classes = useStyles();
-	// console.log(character[0].episode.map((e) => (<p className={classes.info}>Episode: {e}</p>)));
-	// console.log()));
 
-	return (
+	//Tried to do the likes part, it needs more time and optimization, do it later
+
+	// const likeHandlers = (evt) => {
+	// 	// console.log(evt.target.innerText);
+	// 	if (evt.target.innerText == 'Like' && isLoggedIn) {
+	// 		likedChars.filter((likedChar) => {
+	// 			setLikedChars(likedChars.push(1));
+	// 			return { ...likedChar };
+	// 		});
+	// 	}
+	// };
+	// console.log(likedChars);
+
+	// return (
+	return agreed === true ? (
+		<Grid item xs={12}>
+			<VirtualizedAutocomplete
+				defaultProps={{
+					options: likedChars,
+					getOptionLabel: (option) => `${option.charName}`,
+				}}
+				characters={likedChars}
+			/>{' '}
+		</Grid>
+	) : (
 		<Grid direction='row' container className={classes.container}>
 			<Grid item xs={6}>
 				<Card className={classes.Profile} key={character[0].id}>
@@ -77,15 +107,18 @@ export default function Profile({ characters, id }) {
 					</Grid>
 					<Grid item xs={12}>
 						<BottomNavigation
-							showLabels
 							className={classes.icon}
-
 							// value={value}
 							// onChange={(event, newValue) => {
 							// 	setValue(newValue);
 							// }}
+							// onClick={likeHandlers}
 						>
-							<BottomNavigationAction label='Like' icon={<ThumbUpIcon />} />
+							<BottomNavigationAction
+								key={character[0].id}
+								label='Like'
+								icon={<ThumbUpIcon />}
+							/>
 							<AddPhotoAlternateIcon label='Add a photo' fontSize='large' />
 							<BottomNavigationAction
 								label='Dislike'
