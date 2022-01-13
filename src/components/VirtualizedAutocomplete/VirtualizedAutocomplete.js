@@ -45,6 +45,9 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 		<div ref={ref}>
 			<div {...other}>
 				<List
+					sx={{
+						background: 'black',
+					}}
 					height={250}
 					width={400}
 					rowHeight={itemSize}

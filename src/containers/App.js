@@ -6,6 +6,8 @@ import ReactWindowTable from '../components/ReactWindowTable/ReactWindowTable';
 import Profile from '../components/Profile/Profile';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@mui/material/Grid';
+import FacebookLogin from 'react-facebook-login';
+import HomeIcon from '@mui/icons-material/Home';
 
 // import './App.css';
 
@@ -14,6 +16,8 @@ function App() {
 	const [route, setRoute] = useState('home');
 	const [charId, setCharId] = useState('');
 	const [searchfield, setSearchfield] = useState('');
+
+	localStorage.setItem('key', 'value');
 
 	const useStyles = makeStyles((theme) => ({
 		root: {
@@ -28,6 +32,12 @@ function App() {
 			height: '100%',
 			width: '100%',
 		},
+		nav: {
+			position: 'absolute',
+			right: '25%',
+		},
+		linkUl: { listStyle: 'none' },
+
 		logo: {
 			width: 300,
 			marginLeft: '20%',
@@ -37,18 +47,31 @@ function App() {
 			flexDirection: 'row',
 			flexWrap: 'nowrap',
 			maxWidth: '30%',
-			marginLeft: '5%',
+			marginLeft: '10%',
 			marginTop: '1.5%',
 		},
 		listSection: { display: 'flex', flexDirection: 'row' },
+		titlecontainer: {
+			display: 'flex',
+			flexDirection: 'column',
+			width: '50%',
+		},
 		h1: {
 			color: '#363636',
 		},
+		fbIcon: {
+			// position: 'absolute',
+			// display: 'block',
+			// marginLeft: '200%',
+			// paddingRight: '20%',
+		},
+
 		title: {
 			fontSize: '60px',
 			textAlign: 'center',
-			maxWidth: '50%',
-			marginTop: '30%',
+			maxWidth: '60%',
+			marginTop: '10%',
+			marginLeft: '20%',
 		},
 		listing: {
 			fontFamily: 'Playfair Display, serif',
@@ -154,6 +177,15 @@ function App() {
 	);
 	return route === 'home' && !charId ? (
 		<div className={classes.root}>
+			<nav className={classes.nav}>
+				<ul className={classes.linkUl}>
+					<li>
+						<a className={classes.link} href='home'>
+							<HomeIcon fontSize='large' className={classes.button} />
+						</a>
+					</li>
+				</ul>
+			</nav>
 			<Grid container className={classes.logoSection}>
 				<Grid item xs={12}>
 					<img
@@ -178,8 +210,20 @@ function App() {
 
 			{searchfield === '' ? (
 				<Grid item xs={12} className={classes.listSection}>
-					{' '}
-					<h1 className={classes.title}>Rick and morty Characters list</h1>
+					<div className={classes.titlecontainer}>
+						{' '}
+						<h1 className={classes.title}>Rick and morty Characters list</h1>
+						<FacebookLogin
+							size={'small'}
+							className={classes.fbIcon}
+							appId='1088597931155576'
+							autoLoad={true}
+							fields='name,email,picture'
+							// callback={responseFacebook}
+							// cssClass='my-facebook-button-class'
+							// icon={<FacebookIcon />}
+						/>
+					</div>
 					<Container maxWidth='lg' className={classes.container}>
 						<Paper className={classes.paper}>
 							<ReactWindowTable
@@ -193,9 +237,21 @@ function App() {
 					</Container>
 				</Grid>
 			) : (
-				<Grid container className={classes.listSection}>
-					{' '}
-					<h1 className={classes.title}>Rick and morty Characters list</h1>
+				<Grid item xs={12} className={classes.listSection}>
+					<div className={classes.titlecontainer}>
+						{' '}
+						<h1 className={classes.title}>Rick and morty Characters list</h1>
+						<FacebookLogin
+							size={'small'}
+							className={classes.fbIcon}
+							appId='1088597931155576'
+							autoLoad={true}
+							fields='name,email,picture'
+							// callback={responseFacebook}
+							// cssClass='my-facebook-button-class'
+							// icon={<FacebookIcon />}
+						/>
+					</div>
 					<Container maxWidth='lg' className={classes.container}>
 						<Paper className={classes.paper}>
 							<ReactWindowTable
@@ -213,6 +269,15 @@ function App() {
 	) : (
 		//rendering the selecting character based on the searchfield choice or table click
 		<div>
+			<nav className={classes.nav}>
+				<ul className={classes.linkUl}>
+					<li>
+						<a className={classes.link} href='home'>
+							<HomeIcon fontSize='large' className={classes.button} />
+						</a>
+					</li>
+				</ul>
+			</nav>
 			<Profile id={charId} characters={charactersWithTheNeededAttributes} />
 		</div>
 	);

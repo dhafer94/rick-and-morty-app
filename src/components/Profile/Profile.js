@@ -33,10 +33,6 @@ export default function Profile({ characters, id }) {
 
 	return (
 		<div>
-			<h2>
-				{' '}
-				<a href='home'>Home</a>{' '}
-			</h2>
 			<Card className={classes.Profile} key={character[0].id}>
 				<p>Name: {character[0].charName}</p>
 				<p>Species: {character[0].species}</p>

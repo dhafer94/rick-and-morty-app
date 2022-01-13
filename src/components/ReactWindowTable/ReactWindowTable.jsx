@@ -16,8 +16,9 @@ export const useStyles = makeStyles((theme) => ({
 	tableContainer: {
 		display: 'flex',
 		flex: 1,
-		border: '1px solid #363636',
+		border: '4px solid #6867AC',
 		borderRadius: '5px',
+		// background: '#6867AC',
 	},
 	table: {
 		height: '100%',
@@ -25,17 +26,18 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	list: {},
 	thead: {
-		background: '#FFBCBC',
-		border: '1.5px solid #363636',
+		background: '#6867AC',
+		border: '1.5px solid #6867AC',
 		borderRadius: '20px',
 	},
 	tbody: {
 		width: '100%',
 		// background: 'red',
-		border: '1px solid purple',
+		border: '1px solid #6867AC',
 		borderRadius: '20px',
 	},
 	row: {
+		cursor: 'pointer',
 		display: 'flex',
 		flexDirection: 'row',
 		flexWrap: 'nowrap',
@@ -43,9 +45,13 @@ export const useStyles = makeStyles((theme) => ({
 		boxSizing: 'border-box',
 		minWidth: '100%',
 		width: '100',
-		cursor: 'pointer',
 	},
-	headerRow: {},
+	'row:hover': {
+		background: '#363636',
+	},
+	headerRow: {
+		cursor: 'default',
+	},
 	cell: {
 		display: 'block',
 		flexGrow: 0,
@@ -57,7 +63,6 @@ export const useStyles = makeStyles((theme) => ({
 		flex: 1,
 	},
 	column: {
-		border: '1px solid #363636',
 		borderRight: 'none',
 	},
 }));
