@@ -8,17 +8,17 @@ import { makeStyles } from '@material-ui/styles';
 import Grid from '@mui/material/Grid';
 import FacebookLogin from 'react-facebook-login';
 import HomeIcon from '@mui/icons-material/Home';
+import useLocalStorage from '../useLocalStorage';
 
 // import './App.css';
 
 function App() {
-	const [characters, setCharacters] = useState([]);
-	const [route, setRoute] = useState('home');
-	const [charId, setCharId] = useState('');
-	const [searchfield, setSearchfield] = useState('');
+	const [characters, setCharacters] = useLocalStorage('characters', []);
+	const [route, setRoute] = useLocalStorage('route', 'home');
+	const [charId, setCharId] = useLocalStorage('charID', '');
+	const [searchfield, setSearchfield] = useLocalStorage('searchfield', '');
 
-	localStorage.setItem('key', 'value');
-
+	console.log(characters);
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			fontFamily: 'Playfair Display, serif',
