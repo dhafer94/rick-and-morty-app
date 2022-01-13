@@ -22,7 +22,7 @@ function App() {
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			fontFamily: 'Playfair Display, serif',
-			display: 'grid',
+			display: 'flex',
 			padding: 0,
 			margin: 0,
 			flexDirection: 'column',
@@ -32,29 +32,49 @@ function App() {
 			height: '100%',
 			width: '100%',
 		},
+		// image1: {
+		// 	position: 'absolute',
+		// 	height: '100%',
+		// 	width: '15%',
+		// 	opacity: '60%',
+		// 	// transform: 'scaleX(-1)',
+		// },
+		// image2: {
+		// 	position: 'absolute',
+		// 	right: 0,
+		// 	height: '100%',
+		// 	width: '10rem',
+		// 	opacity: '60%',
+		// 	// transform: 'scaleX(-1)',
+		// },
+
 		nav: {
-			position: 'absolute',
-			right: '25%',
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'center',
 		},
 		linkUl: { listStyle: 'none' },
 
 		logo: {
 			width: 300,
-			marginLeft: '20%',
+			marginBottom: '2%',
 		},
 		logoSection: {
 			display: 'flex',
 			flexDirection: 'row',
-			flexWrap: 'nowrap',
-			maxWidth: '30%',
-			marginLeft: '10%',
-			marginTop: '1.5%',
+			margin: '0 5%',
+			// flexWrap: 'nowrap',
+			// maxWidth: '30%',
+			// marginLeft: '10%',
+			// marginBottom: '1%',
 		},
 		listSection: { display: 'flex', flexDirection: 'row' },
 		titlecontainer: {
 			display: 'flex',
 			flexDirection: 'column',
 			width: '50%',
+			marginTop: '11rem',
+			marginBottom: '10rem',
 		},
 		h1: {
 			color: '#363636',
@@ -63,29 +83,30 @@ function App() {
 			// position: 'absolute',
 			// display: 'block',
 			// marginLeft: '200%',
-			// paddingRight: '20%',
 		},
 
 		title: {
-			fontSize: '60px',
+			fontSize: '50px',
 			textAlign: 'center',
-			maxWidth: '60%',
-			marginTop: '10%',
-			marginLeft: '20%',
+			maxWidth: '100%',
+			// marginTop: '30%',
+			// marginLeft: '20%',
+			// marginBottom: '5%',
 		},
 		listing: {
 			fontFamily: 'Playfair Display, serif',
 			display: 'flex',
 			textAlign: 'center',
-			background: 'white',
 			flex: 'column',
 		},
+		// table
 		container: {
 			flex: 'row',
 			flexGrow: 1,
-			height: '35rem',
+			height: '30rem',
 			width: '50%',
-			padding: 0,
+			padding: '0 5%',
+			paddingBottom: '1%',
 		},
 
 		paper: {
@@ -94,6 +115,9 @@ function App() {
 			display: 'flex',
 			flexDirection: 'column',
 			background: '#a5fc94',
+		},
+		card: {
+			width: 'fit-content',
 		},
 	}));
 
@@ -177,7 +201,7 @@ function App() {
 	);
 	return route === 'home' && !charId ? (
 		<div className={classes.root}>
-			<nav className={classes.nav}>
+			<Grid container className={classes.nav}>
 				<ul className={classes.linkUl}>
 					<li>
 						<a className={classes.link} href='home'>
@@ -185,90 +209,109 @@ function App() {
 						</a>
 					</li>
 				</ul>
-			</nav>
-			<Grid container className={classes.logoSection}>
-				<Grid item xs={12}>
-					<img
-						className={classes.logo}
-						src={require('./logo.png')}
-						alt='logo'
-					/>
-				</Grid>
-				<Grid item xs={12}>
-					<VirtualizedAutocomplete
-						defaultProps={{
-							options: charactersWithTheNeededAttributes,
-							getOptionLabel: (option) => `${option.charName}`,
-						}}
-						characters={charactersWithTheNeededAttributes}
-						setRoute={setRoute}
-						setCharId={setCharId}
-						onInputchange={handleInputChange}
-					/>
+			</Grid>
+			<Grid item xs={12} flexDirection='column'>
+				<Grid container className={classes.logoSection}>
+					<Grid className={classes.logoGrid} item xs={12}>
+						<img
+							className={classes.logo}
+							src={require('./logo.png')}
+							alt='logo'
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<VirtualizedAutocomplete
+							defaultProps={{
+								options: charactersWithTheNeededAttributes,
+								getOptionLabel: (option) => `${option.charName}`,
+							}}
+							characters={charactersWithTheNeededAttributes}
+							setRoute={setRoute}
+							setCharId={setCharId}
+							onInputchange={handleInputChange}
+						/>
+					</Grid>
 				</Grid>
 			</Grid>
-
 			{searchfield === '' ? (
-				<Grid item xs={12} className={classes.listSection}>
-					<div className={classes.titlecontainer}>
-						{' '}
-						<h1 className={classes.title}>Rick and morty Characters list</h1>
-						<FacebookLogin
-							size={'small'}
-							className={classes.fbIcon}
-							appId='1088597931155576'
-							autoLoad={true}
-							fields='name,email,picture'
-							// callback={responseFacebook}
-							// cssClass='my-facebook-button-class'
-							// icon={<FacebookIcon />}
-						/>
-					</div>
-					<Container maxWidth='lg' className={classes.container}>
-						<Paper className={classes.paper}>
-							<ReactWindowTable
-								data={charactersWithTheNeededAttributes}
-								columns={columns}
-								characters={charactersWithTheNeededAttributes}
-								setCharId={setCharId}
-								searchfield={searchfield}
-							/>
-						</Paper>
-					</Container>
+				<Grid container>
+					<Grid item xs={6}>
+						<Grid container xs={12} className={classes.titlecontainer}>
+							<Grid className={classes.titleGrid} item xs={12}>
+								<h1 className={classes.title}>
+									Rick and morty Characters list
+								</h1>
+							</Grid>
+							<Grid item xs={12}>
+								<FacebookLogin
+									size={'small'}
+									className={classes.fbIcon}
+									appId='1088597931155576'
+									autoLoad={true}
+									fields='name,email,picture'
+									// callback={responseFacebook}
+									// cssClass='my-facebook-button-class'
+									// icon={<FacebookIcon />}
+								/>
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid item xs={6} className={classes.listSection}>
+						<Container maxWidth='lg' className={classes.container}>
+							<Paper className={classes.paper}>
+								<ReactWindowTable
+									data={charactersWithTheNeededAttributes}
+									columns={columns}
+									characters={charactersWithTheNeededAttributes}
+									setCharId={setCharId}
+									searchfield={searchfield}
+								/>
+							</Paper>
+						</Container>
+					</Grid>
 				</Grid>
 			) : (
-				<Grid item xs={12} className={classes.listSection}>
-					<div className={classes.titlecontainer}>
-						{' '}
-						<h1 className={classes.title}>Rick and morty Characters list</h1>
-						<FacebookLogin
-							size={'small'}
-							className={classes.fbIcon}
-							appId='1088597931155576'
-							autoLoad={true}
-							fields='name,email,picture'
-							// callback={responseFacebook}
-							// cssClass='my-facebook-button-class'
-							// icon={<FacebookIcon />}
-						/>
-					</div>
-					<Container maxWidth='lg' className={classes.container}>
-						<Paper className={classes.paper}>
-							<ReactWindowTable
-								data={searchfieldFilter}
-								columns={columns}
-								characters={searchfieldFilter}
-								setCharId={setCharId}
-								searchfield={searchfield}
-							/>
-						</Paper>
-					</Container>
+				<Grid container>
+					<Grid item xs={6}>
+						<Grid container xs={12} className={classes.titlecontainer}>
+							<Grid className={classes.titleGrid} item xs={12}>
+								<h1 className={classes.title}>
+									Rick and morty Characters list
+								</h1>
+							</Grid>
+							<Grid item xs={12}>
+								<FacebookLogin
+									size={'small'}
+									className={classes.fbIcon}
+									appId='1088597931155576'
+									autoLoad={true}
+									fields='name,email,picture'
+									// callback={responseFacebook}
+									// cssClass='my-facebook-button-class'
+									// icon={<FacebookIcon />}
+								/>
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid item xs={6} className={classes.listSection}>
+						<Container maxWidth='lg' className={classes.container}>
+							<Paper className={classes.paper}>
+								<ReactWindowTable
+									data={searchfieldFilter}
+									columns={columns}
+									characters={searchfieldFilter}
+									setCharId={setCharId}
+									searchfield={searchfield}
+								/>
+							</Paper>
+						</Container>
+					</Grid>
 				</Grid>
 			)}
 		</div>
 	) : (
-		//rendering the selecting character based on the searchfield choice or table click
-		<div>
+		//rendering the selected character based on the searchfield choice or table click
+		<div className={classes.root}>
 			<nav className={classes.nav}>
 				<ul className={classes.linkUl}>
 					<li>
@@ -278,7 +321,14 @@ function App() {
 					</li>
 				</ul>
 			</nav>
-			<Profile id={charId} characters={charactersWithTheNeededAttributes} />
+			<Grid className={classes.logoGrid} item xs={12}>
+				<img className={classes.logo} src={require('./logo.png')} alt='logo' />
+			</Grid>
+			<Profile
+				className={classes.card}
+				id={charId}
+				characters={charactersWithTheNeededAttributes}
+			/>
 		</div>
 	);
 }

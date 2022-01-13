@@ -14,18 +14,6 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'center',
 		borderRadius: 20,
 	},
-
-	autocomplete: {
-		display: 'flex',
-		textAlign: 'center',
-		// background: 'white',
-		flex: 'column',
-		width: 'fit-content',
-		// marginLeft: '50%'
-		// position: 'absolute',
-		// top: '16%',
-		// left: '25%',
-	},
 	title: {
 		fontSize: '60px',
 		textAlign: 'center',
@@ -45,9 +33,6 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 		<div ref={ref}>
 			<div {...other}>
 				<List
-					sx={{
-						background: 'black',
-					}}
 					height={250}
 					width={400}
 					rowHeight={itemSize}
@@ -84,7 +69,6 @@ function VirtualizedAutocomplete({
 
 	return (
 		<Autocomplete
-			className={classes.autocomplete}
 			{...defaultProps}
 			sx={{ width }}
 			autoHighlight
@@ -99,10 +83,15 @@ function VirtualizedAutocomplete({
 				<TextField
 					{...params}
 					variant='standard'
+					className={classes.autocomplete}
 					label='Choose a character'
+					//for styling
 					sx={{
 						width: 400,
 						display: 'flex',
+						marginLeft: '5%',
+						position: 'absolute',
+						top: '6rem',
 					}}
 				/>
 			)}
