@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-// import List from '../components/List';
-import './App.css';
-import VirtualizedAutocomplete from './VirtualizedAutocomplete';
-import { makeStyles } from '@material-ui/styles';
+import VirtualizedAutocomplete from '../components/VirtualizedAutocomplete/VirtualizedAutocomplete';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import ReactWindowTable from '../components/ReactWindowTable/ReactWindowTable';
+import Profile from '../components/Profile/Profile';
+import { makeStyles } from '@material-ui/styles';
+// import './App.css';
 
-import Profile from '../components/Profile';
 function App() {
 	const [characters, setCharacters] = useState([]);
 	const [route, setRoute] = useState('home');
@@ -16,6 +15,7 @@ function App() {
 
 	const useStyles = makeStyles((theme) => ({
 		root: {
+			fontFamily: 'Playfair Display, serif',
 			display: 'flex',
 			padding: 0,
 			margin: 0,
@@ -25,6 +25,9 @@ function App() {
 			background: '#00b0c8',
 			height: '100%',
 			width: '100%',
+		},
+		logo: {
+			width: '20%',
 		},
 		h1: {
 			color: '#363636',
@@ -41,16 +44,18 @@ function App() {
 			height: '20px',
 		},
 		listing: {
+			fontFamily: 'Playfair Display, serif',
 			display: 'flex',
 			textAlign: 'center',
 			background: 'white',
-			flex: 'column-reverse',
+			flex: 'column',
 		},
 		container: {
 			flexGrow: 1,
 			height: 500,
 			width: '50%',
 			padding: 0,
+			display: 'inline',
 		},
 		title: {
 			fontSize: '60px',
@@ -123,14 +128,13 @@ function App() {
 	];
 	//for the autocomplete in the virtualized table component
 	const handleInputChange = (evt) => {
-		setSearchfield(evt.target.value);
+		let item = evt.target.value;
+		setSearchfield(item);
 	};
 	//comparing the table items agains the typed text to show the corresponding rows
 	const searchfieldFilter = charactersWithTheNeededAttributes.filter(
 		(character) => {
-			if (
-				character.charName.toLowerCase().includes(searchfield.toLowerCase())
-			) {
+			if (character && character.charName.toLowerCase().includes(searchfield)) {
 				return {
 					id: character.id,
 					charName: character.charName,
@@ -146,6 +150,9 @@ function App() {
 	);
 	return route === 'home' && !charId ? (
 		<div className={classes.root}>
+			<img className={classes.logo} src={require('./logo.png')} alt='logo' />
+			<h1 className={classes.title}>Rick and morty Characters list</h1>
+
 			<VirtualizedAutocomplete
 				defaultProps={{
 					options: charactersWithTheNeededAttributes,

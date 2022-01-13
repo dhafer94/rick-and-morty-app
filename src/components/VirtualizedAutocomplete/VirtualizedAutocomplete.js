@@ -4,14 +4,29 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { List } from 'react-virtualized';
 import { makeStyles } from '@material-ui/styles';
 import './VirtualizedAutocomplete.css';
+import { borderRadius } from '@mui/system';
 
 //styles
 const useStyles = makeStyles((theme) => ({
-	listing: {
+	maincontainer: {
 		display: 'flex',
+		flexDirection: 'column',
+		textAlign: 'center',
+		borderRadius: 20
+
+	},
+
+	autocomplete: {
+		display: 'inline',
 		textAlign: 'center',
 		background: 'white',
-		flex: 'column-reverse',
+		// flex: 'column',
+		width: 'fit-content',
+		// marginLeft: '20'
+		// position: 'absolute',
+		// top: '16%',
+		// left: '25%',
+
 	},
 	title: {
 		fontSize: '60px',
@@ -33,7 +48,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 			<div {...other}>
 				<List
 					height={250}
-					width={300}
+					width={480}
 					rowHeight={itemSize}
 					overscanCount={5}
 					rowCount={itemCount}
@@ -67,35 +82,30 @@ function VirtualizedAutocomplete({
 	};
 
 	return (
-		<div className={classes.maincontainer}>
-			<h1 className={classes.title}>Rick and morty Characters list</h1>
-			<div className={classes.listing}>
-				<Autocomplete
-					{...defaultProps}
-					sx={{ width }}
-					autoHighlight
-					selectOnFocus
-					autoComplete={true}
-					isOptionEqualToValue={(option, value) => option.name === value.name}
-					//searchfield selection handler
-					onChange={handlechange}
-					//filtering through the list to show the characters based on autocomplete
-					onInputChange={(evt) => onInputchange(evt)}
-					ListboxComponent={ListboxComponent}
-					renderInput={(params) => (
-						<TextField
-							{...params}
-							variant='standard'
-							label='Choose a character'
-							sx={{
-								width: 300,
-								display: 'flex',
-							}}
-						/>
-					)}
+		<Autocomplete
+			className={classes.autocomplete}
+			{...defaultProps}
+			sx={{ width }}
+			autoHighlight
+			selectOnFocus
+			isOptionEqualToValue={(option, value) => option.name === value.name}
+			//searchfield selection handler
+			onChange={handlechange}
+			//filtering through the list to show the characters based on autocomplete
+			onInputChange={(evt) => onInputchange(evt)}
+			ListboxComponent={ListboxComponent}
+			renderInput={(params) => (
+				<TextField
+					{...params}
+					variant='standard'
+					label='Choose a character'
+					sx={{
+						width: 480,
+						display: 'flex',
+					}}
 				/>
-			</div>
-		</div>
+			)}
+		/>
 	);
 }
 export default VirtualizedAutocomplete;

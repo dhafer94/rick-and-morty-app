@@ -13,14 +13,19 @@ const theme = createTheme({
     MuiCssBaseline: {
       "@global": {
         html: {
+          fontFamily: 'Playfair Display, serif',
           padding: 0,
-          margin: 0
+          margin: 0,
+          textAlign: 'center'
         },
         body: {
+          fontFamily: 'Playfair Display, serif',
           background: '#00b0c8',
           height: '100%',
           padding: 0,
-          margin: 0
+          margin: 0,
+          textAlign: 'center'
+
         },
         h1: {
           color: '#363636'
