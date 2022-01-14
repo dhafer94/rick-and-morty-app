@@ -82,15 +82,7 @@ export default function Profile({
 
 	// return (
 	return agreed === true ? (
-		<Grid item xs={12}>
-			<VirtualizedAutocomplete
-				defaultProps={{
-					options: likedChars,
-					getOptionLabel: (option) => `${option.charName}`,
-				}}
-				characters={likedChars}
-			/>{' '}
-		</Grid>
+		<Grid item xs={12}></Grid>
 	) : (
 		<Grid direction='row' container className={classes.container}>
 			<Grid item xs={6}>

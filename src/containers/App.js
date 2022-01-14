@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import VirtualizedAutocomplete from '../components/VirtualizedAutocomplete/VirtualizedAutocomplete';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import ReactWindowTable from '../components/ReactWindowTable/ReactWindowTable';
 import Profile from '../components/Profile/Profile';
+import UserCard from '../components/UserCard/UserCard';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@mui/material/Grid';
 import FacebookLogin from 'react-facebook-login';
 import HomeIcon from '@mui/icons-material/Home';
 import useLocalStorage from '../useLocalStorage';
-import { Avatar, Card } from '@mui/material';
-import { height } from '@mui/system';
 
-// import './App.css';
+// const routeContext = createContext();
+
 function App() {
 	const [characters, setCharacters] = useState([]);
 	const [route, setRoute] = useState('home');
@@ -164,6 +164,13 @@ function App() {
 		let item = evt.target.value;
 		setSearchfield(item);
 	};
+
+	//To navigate to the chosen character from tha autocomplete component
+	const handlechange = (evt, newVal) => {
+		setCharId(Number(newVal.id));
+		setRoute('profile');
+	};
+
 	// console.log(likedChars);
 
 	//comparing the table items agains the typed text to show the corresponding rows
@@ -183,6 +190,7 @@ function App() {
 			}
 		},
 	);
+
 	const componentClicked = () => {
 		console.log('clicked');
 	};
@@ -222,16 +230,20 @@ function App() {
 						/>
 					</Grid>
 					<Grid item xs={12}>
+						{/* <routeContext.Provider value={(setCharId, route, setRoute)}> */}
 						<VirtualizedAutocomplete
 							defaultProps={{
 								options: charactersWithTheNeededAttributes,
 								getOptionLabel: (option) => `${option.charName}`,
+								// onChange: handlechange,
+								onInputChange: handleInputChange,
+								// setRoute: setRoute,
+								// setCharId: setCharId,
 							}}
-							characters={charactersWithTheNeededAttributes}
-							setRoute={setRoute}
-							setCharId={setCharId}
-							onInputchange={handleInputChange}
+							handlechange={handlechange}
+							handleInputChange={handleInputChange}
 						/>
+						{/* </routeContext.Provider> */}
 					</Grid>
 				</Grid>
 			</Grid>
@@ -247,26 +259,9 @@ function App() {
 
 							<Grid item xs={12}>
 								{isLoggedIn ? (
-									<Paper className={classes.profilePaper} key={userId}>
-										<Avatar
-											className={classes.ava}
-											alt='user'
-											src={userPicture}
-										/>
-										<Card className={classes.profileCard}>
-											<h3 className={classes.profileName}>{userName}</h3>
-											<h2
-												className={
-													classes.profileInfo
-												}>{`you liked ${likedChars.length} characters`}</h2>
-											<a
-												className={classes.profileLink}
-												// onClick={agreedFunc}
-											>
-												click here if you would like to see them
-											</a>
-										</Card>
-									</Paper>
+									<UserCard
+										props={(userPicture, userId, userName, likedChars)}
+									/>
 								) : (
 									<FacebookLogin
 										appId='180235034300658'
