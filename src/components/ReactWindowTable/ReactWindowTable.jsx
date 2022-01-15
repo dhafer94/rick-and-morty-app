@@ -18,7 +18,6 @@ export const useStyles = makeStyles((theme) => ({
 		flex: 1,
 		border: '4px solid #6867AC',
 		borderRadius: '5px',
-		// background: '#6867AC',
 	},
 	table: {
 		height: '100%',

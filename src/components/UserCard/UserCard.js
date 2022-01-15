@@ -1,8 +1,6 @@
 import React from 'react';
-import { Avatar, Card, Grid } from '@mui/material';
-import Paper from '@material-ui/core/Paper';
+import { Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/styles';
-import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -12,7 +10,6 @@ import CardMedia from '@mui/material/CardMedia';
 const useStyles = makeStyles((theme) => ({
 	container: {
 		width: 'fit-content',
-		border: '1px solid black',
 		borderRadius: '50px',
 		boxShadow: '2px 5px 15px -3px #a5fc94',
 	},

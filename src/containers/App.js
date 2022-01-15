@@ -30,7 +30,7 @@ function App() {
 			fontFamily: 'Playfair Display, serif',
 			display: 'flex',
 			padding: 0,
-			margin: 0,
+			margin: '0 auto',
 			flexDirection: 'column',
 			textAlign: 'center',
 			justifyContent: 'center',
@@ -244,8 +244,8 @@ function App() {
 					</li>
 				</ul>
 			</Grid>
-			<Grid item xs={12} flexDirection='column'>
-				<Grid container className={classes.logoSection}>
+			<Grid item className={classes.logoSection} xs={12} flexDirection='column'>
+				<Grid container>
 					<Grid className={classes.logoGrid} item xs={12}>
 						<img
 							className={classes.logo}
