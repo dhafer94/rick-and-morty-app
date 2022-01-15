@@ -34,7 +34,6 @@ function App() {
 			flexDirection: 'column',
 			textAlign: 'center',
 			justifyContent: 'center',
-			background: '#00b0c8',
 			height: '100%',
 			width: '100%',
 		},
@@ -44,6 +43,9 @@ function App() {
 			justifyContent: 'center',
 		},
 		linkUl: { listStyle: 'none' },
+		button: {
+			color: '#fff',
+		},
 
 		logo: {
 			width: 300,
@@ -67,8 +69,10 @@ function App() {
 		},
 		title: {
 			fontSize: '50px',
+			opacity: 1,
 			textAlign: 'center',
 			maxWidth: '100%',
+			textShadow: '#a5fc94 1px 1px 0px',
 		},
 		listing: {
 			fontFamily: 'Playfair Display, serif',

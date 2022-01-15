@@ -62,7 +62,9 @@ function VirtualizedAutocomplete({
 	return (
 		<Autocomplete
 			{...defaultProps}
-			sx={{ width }}
+			sx={{
+				width,
+			}}
 			autoHighlight
 			selectOnFocus
 			// setroute={defaultProps}
@@ -82,9 +84,12 @@ function VirtualizedAutocomplete({
 					sx={{
 						width: 400,
 						display: 'flex',
-						marginLeft: '5%',
-						position: 'absolute',
-						top: '6rem',
+						margin: '0 auto 0 5%',
+						color: '#000',
+						backgroundColor: '#fff',
+						opacity: '1',
+						borderRadius: 1
+
 					}}
 				/>
 			)}
