@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import VirtualizedAutocomplete from '../components/VirtualizedAutocomplete/VirtualizedAutocomplete';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid';
 import FacebookLogin from 'react-facebook-login';
 import HomeIcon from '@mui/icons-material/Home';
 import useLocalStorage from '../useLocalStorage';
-
+import Interactions from '../components/Interactions/Interactions';
 // const routeContext = createContext();
 
 function App() {
@@ -24,7 +24,6 @@ function App() {
 	// const [userEmail, setUserEmail] = useLocalStorage('userEmail', '');
 	const [userPicture, setUserPicture] = useLocalStorage('userPicture', '');
 	const [likedChars, setLikedChars] = useLocalStorage('likedChars', []);
-	const [agreed, setAgreed] = useState(false);
 
 	const useStyles = makeStyles((theme) => ({
 		root: {
@@ -165,13 +164,39 @@ function App() {
 		setSearchfield(item);
 	};
 
-	//To navigate to the chosen character from tha autocomplete component
+	//To navigate to the chosen character profile from tha autocomplete component
 	const handlechange = (evt, newVal) => {
 		setCharId(Number(newVal.id));
 		setRoute('profile');
 	};
 
-	// console.log(likedChars);
+	//navigate to the chosen character profile
+	const clickHandler = (evt) => {
+		if (evt.target.id) {
+			setCharId(Number(evt.target.id));
+			setRoute('profile');
+		}
+	};
+
+	//saving the liked character by a logged in user
+	const likeHandler = (evt) => {
+		if (isLoggedIn) {
+			const likedChar = charactersWithTheNeededAttributes.filter((char) => {
+				if (charId === char.id) {
+					if (!likedChars.some((c) => c.id === char.id)) {
+						return char;
+					} else {
+						alert(`${char.charName} is already in your favourites!!`);
+					}
+				}
+			});
+			setLikedChars([...likedChars, ...likedChar]);
+		} else {
+			alert(`You are not logged in!`);
+		}
+	};
+
+	const homeFunc = () => setRoute('home');
 
 	//comparing the table items agains the typed text to show the corresponding rows
 	const searchfieldFilter = charactersWithTheNeededAttributes.filter(
@@ -204,17 +229,16 @@ function App() {
 	};
 
 	//here we will filter through to look for the characters he like
-	// const agreedFunc = () => {
-	// 	setAgreed('true');
-	// 	setRoute('profile');
-	// };
+	const agreedFunc = () => {
+		setRoute('interactions');
+	};
 
 	return route === 'home' && !charId ? (
 		<div className={classes.root}>
 			<Grid container className={classes.nav}>
 				<ul className={classes.linkUl}>
 					<li>
-						<a className={classes.link} href='home'>
+						<a onClick={homeFunc} className={classes.link} href='/'>
 							<HomeIcon fontSize='large' className={classes.button} />
 						</a>
 					</li>
@@ -230,20 +254,15 @@ function App() {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						{/* <routeContext.Provider value={(setCharId, route, setRoute)}> */}
 						<VirtualizedAutocomplete
 							defaultProps={{
 								options: charactersWithTheNeededAttributes,
 								getOptionLabel: (option) => `${option.charName}`,
-								// onChange: handlechange,
 								onInputChange: handleInputChange,
-								// setRoute: setRoute,
-								// setCharId: setCharId,
 							}}
 							handlechange={handlechange}
 							handleInputChange={handleInputChange}
 						/>
-						{/* </routeContext.Provider> */}
 					</Grid>
 				</Grid>
 			</Grid>
@@ -256,16 +275,19 @@ function App() {
 									Rick and morty Characters list
 								</h1>
 							</Grid>
-
 							<Grid item xs={12}>
 								{isLoggedIn ? (
 									<UserCard
-										props={(userPicture, userId, userName, likedChars)}
+										userPicture={userPicture}
+										userId={userId}
+										userName={userName}
+										likedChars={likedChars}
+										agreedFunc={agreedFunc}
 									/>
 								) : (
 									<FacebookLogin
 										appId='180235034300658'
-										autoLoad={true}
+										autoLoad={false}
 										fields='name,email,picture'
 										onClick={componentClicked}
 										callback={responseFacebook}
@@ -280,9 +302,7 @@ function App() {
 								<ReactWindowTable
 									data={charactersWithTheNeededAttributes}
 									columns={columns}
-									characters={charactersWithTheNeededAttributes}
-									setCharId={setCharId}
-									searchfield={searchfield}
+									clickHandler={clickHandler}
 								/>
 							</Paper>
 						</Container>
@@ -326,13 +346,20 @@ function App() {
 				</Grid>
 			)}
 		</div>
+	) : route === 'interactions' ? (
+		<Interactions
+			homeFunc={homeFunc}
+			likedChars={likedChars}
+			clickHandler={clickHandler}
+		/>
 	) : (
 		//rendering the selected character based on the searchfield choice or table click
+
 		<div className={classes.root}>
 			<nav className={classes.nav}>
 				<ul className={classes.linkUl}>
 					<li>
-						<a className={classes.link} href='home'>
+						<a onClick={homeFunc} className={classes.link} href='/'>
 							<HomeIcon fontSize='large' className={classes.button} />
 						</a>
 					</li>
@@ -346,10 +373,9 @@ function App() {
 				id={charId}
 				characters={charactersWithTheNeededAttributes}
 				likedChars={likedChars}
-				SetLikedChars={setLikedChars}
 				userID={userId}
 				isLoggedIn={isLoggedIn}
-				agreed={agreed}
+				likeHandler={likeHandler}
 			/>
 		</div>
 	);

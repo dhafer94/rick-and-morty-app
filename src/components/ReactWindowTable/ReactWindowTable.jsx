@@ -83,14 +83,9 @@ const createItemData = memoize((classes, columns, data) => ({
 	items: data,
 }));
 
-const ReactWindowTable = ({ data, columns, setCharId, setRoute }) => {
+const ReactWindowTable = ({ data, columns, clickHandler }) => {
 	const classes = useStyles();
-	const clickHandler = (evt) => {
-		if (evt.target.id) {
-			setCharId(Number(evt.target.id));
-			setRoute('profile');
-		}
-	};
+
 	// memoized data passed to the Row item renderer
 	const itemData = createItemData(classes, columns, data);
 

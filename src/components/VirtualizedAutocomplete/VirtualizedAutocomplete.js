@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { List } from 'react-virtualized';
 import { makeStyles } from '@material-ui/styles';
 import './VirtualizedAutocomplete.css';
-import { routeContext } from '../../containers/App';
 //styles
 const useStyles = makeStyles((theme) => ({
 	maincontainer: {

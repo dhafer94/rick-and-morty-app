@@ -21,7 +21,7 @@ const theme = createTheme({
         },
         body: {
           fontFamily: 'Playfair Display, serif',
-          background: '#00b0c8',
+          backgroundColor: '#00b0c8',
           height: '100%',
           padding: 0,
           margin: 0,

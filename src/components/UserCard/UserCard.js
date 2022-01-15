@@ -6,16 +6,19 @@ import { makeStyles } from '@material-ui/styles';
 
 
 const useStyles = makeStyles((theme) => ({
-    card: {
+    Paper: {
         width: 'fit-content',
+        backgroundColor: '#A267AC',
     },
     profilePaper: {
         display: 'flex',
         width: '50%',
         marginLeft: '20%',
-        height: '10rem',
+        height: 'fit-content',
         backgroundColor: '#A267AC',
     },
+    profileCard: { backgroundColor: '#A267AC', }
+    ,
     ava: {
         width: '100%',
         // height: '50%',
@@ -29,9 +32,8 @@ const useStyles = makeStyles((theme) => ({
     profileLink: { backgroundColor: '#A267AC', color: '#fff' },
 }));
 
-export default function UserCard({ userPicture, userId, userName, likedChars }) {
+export default function UserCard({ userPicture, userId, userName, likedChars, agreedFunc }) {
     const classes = useStyles();
-
     return (
         <Paper className={classes.profilePaper} key={userId}>
             <Avatar
@@ -44,15 +46,15 @@ export default function UserCard({ userPicture, userId, userName, likedChars }) 
                 <h2
                     className={
                         classes.profileInfo
-                    }>a
-                    {/* {`you liked ${likedChars.length} characters`} */}
+                    }>
+                    {`you liked ${likedChars.length} characters`}
                 </h2>
-                {/* <a
+                <a
                     className={classes.profileLink}
-                // onClick={agreedFunc}
-                > */}
-                {/* click here if you would like to see them */}
-                {/* </a> */}
+                    onClick={agreedFunc}
+                >
+                    click here if you would like to see them
+                </a>
             </Card>
         </Paper >);
 }
