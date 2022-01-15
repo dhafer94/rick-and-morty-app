@@ -131,7 +131,7 @@ const ReactWindowTable = ({ data, columns, clickHandler }) => {
 														)}
 														style={{
 															flexBasis: column.width || false,
-															height: 48,
+															height: 60,
 														}}>
 														{item[column.dataKey]}
 													</TableCell>
