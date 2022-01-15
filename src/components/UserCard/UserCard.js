@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 		width: 'fit-content',
 		borderRadius: '50px',
 		boxShadow: '2px 5px 15px -3px #a5fc94',
+		background: 'rgba(0, 0, 0, 0.4)',
 	},
 }));
 
@@ -24,7 +25,7 @@ export default function UserCard({
 	const classes = useStyles();
 	return (
 		<Grid container className={classes.container}>
-			<Grid sx={{ mx: 'auto' }} item={12}>
+			<Grid sx={{ mx: 'auto' }} item xs={12}>
 				<CardContent sx={{ mx: 'auto' }}>
 					<CardMedia
 						component='img'
@@ -32,17 +33,36 @@ export default function UserCard({
 						image={userPicture}
 						alt='User picture'
 					/>
-					<Typography sx={{ mb: 1.5 }} color='text.Primary'>
+					<Typography
+						sx={{
+							mb: 1.5,
+							textShadow: '#a5fc94 1px 1px 0px',
+							fontSize: '20px',
+							fontWeight: 'bold',
+						}}
+						color='text.Primary'>
 						{userName}
 					</Typography>
-					<Typography sx={{ textAlign: 'right' }} variant='body2'>
+					<Typography
+						sx={{
+							textAlign: 'center',
+							textShadow: '#a5fc94 1px 1px 0px',
+							fontSize: '20px',
+							fontWeight: 'bold',
+						}}
+						variant='body2'>
 						{`you liked ${likedChars.length} characters`}
 					</Typography>
 				</CardContent>
 			</Grid>
 			<CardActions sx={{ margin: 'auto' }}>
 				<Button
-					sx={{ color: 'black' }}
+					sx={{
+						color: 'black',
+						textShadow: '#a5fc94 1px 1px 0px',
+						fontSize: '20px',
+						fontWeight: 'bold',
+					}}
 					className={classes.link}
 					onClick={agreedFunc}
 					size='big'>
