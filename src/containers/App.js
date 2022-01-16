@@ -19,7 +19,7 @@ function App() {
 	const [charId, setCharId] = useState(0);
 	const [searchfield, setSearchfield] = useState('');
 	const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
-	const [userId, setUserId] = useLocalStorage('userdD', 0);
+	const [userId, setUserId] = useLocalStorage('userId', 0);
 	const [userName, setUserName] = useLocalStorage('userName', '');
 	// const [userEmail, setUserEmail] = useLocalStorage('userEmail', '');
 	const [userPicture, setUserPicture] = useLocalStorage('userPicture', '');
