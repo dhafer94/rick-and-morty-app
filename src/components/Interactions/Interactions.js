@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     linkUl: { listStyle: 'none' },
+    button: {
+        color: '#fff',
+    },
     container: {
         flex: 'row',
         flexGrow: 1,

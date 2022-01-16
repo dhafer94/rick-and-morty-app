@@ -19,8 +19,8 @@ function App() {
 	const [charId, setCharId] = useState(0);
 	const [searchfield, setSearchfield] = useState('');
 	const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
-	const [userId, setUserId] = useLocalStorage('userId', 0);
-	const [userName, setUserName] = useLocalStorage('userName', '');
+	const [userId, setUserId] = useLocalStorage('userId', !undefined);
+	const [userName, setUserName] = useLocalStorage('userName', !undefined);
 	// const [userEmail, setUserEmail] = useLocalStorage('userEmail', '');
 	const [userPicture, setUserPicture] = useLocalStorage('userPicture', '');
 	const [likedChars, setLikedChars] = useLocalStorage('likedChars', []);
@@ -46,7 +46,6 @@ function App() {
 		button: {
 			color: '#fff',
 		},
-
 		logo: {
 			width: 300,
 			marginBottom: '2%',
@@ -224,12 +223,14 @@ function App() {
 		console.log('clicked');
 	};
 	const responseFacebook = (res) => {
-		console.log(res);
+		// console.log(res);
 		setUserId(res.id);
 		setUserName(res.name);
 		// setUserEmail(res.email);
 		setUserPicture(res.picture.data.url);
-		setIsLoggedIn(true);
+		if (!isLoggedIn) {
+			setIsLoggedIn(true);
+		}
 	};
 
 	//here we will filter through to look for the characters he like
@@ -242,7 +243,7 @@ function App() {
 			<Grid container className={classes.nav}>
 				<ul className={classes.linkUl}>
 					<li>
-						<a onClick={homeFunc} className={classes.link} href=''>
+						<a onClick={homeFunc} className={classes.link} href='#'>
 							<HomeIcon fontSize='large' className={classes.button} />
 						</a>
 					</li>
