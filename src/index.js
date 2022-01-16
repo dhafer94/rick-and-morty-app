@@ -19,7 +19,8 @@ const theme = createTheme({
           // backgroundColor: '#00b0c8',
           backgroundImage: `url(${background})`,
           backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
+          backgroundRepeat: 'no-repeat round',
+
           height: '100%',
           padding: 0,
           margin: 0,
