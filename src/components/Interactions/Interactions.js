@@ -64,7 +64,7 @@ export default function Interactions({ likedChars, clickHandler, homeFunc }) {
                         <a
                             onClick={homeFunc}
                             className={classes.link}
-                            href='/'>
+                            href=''>
                             <HomeIcon fontSize='large' className={classes.button} />
                         </a>
                     </li>
