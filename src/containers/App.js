@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/styles';
 import Grid from '@mui/material/Grid';
 import FacebookLogin from 'react-facebook-login';
 import HomeIcon from '@mui/icons-material/Home';
-import useLocalStorage from '../useLocalStorage';
+// import useLocalStorage from '../useLocalStorage';
 import Interactions from '../components/Interactions/Interactions';
 // const routeContext = createContext();
 
@@ -18,12 +18,12 @@ function App() {
 	const [route, setRoute] = useState('home');
 	const [charId, setCharId] = useState(0);
 	const [searchfield, setSearchfield] = useState('');
-	const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
-	const [userId, setUserId] = useLocalStorage('userId', 0);
-	const [userName, setUserName] = useLocalStorage('userName', '');
+	const [isLoggedIn, setIsLoggedIn] = useState('isLoggedIn', false);
+	const [userId, setUserId] = useState('userId', 0);
+	const [userName, setUserName] = useState('userName', '');
 	// const [userEmail, setUserEmail] = useLocalStorage('userEmail', '');
-	const [userPicture, setUserPicture] = useLocalStorage('userPicture', '');
-	const [likedChars, setLikedChars] = useLocalStorage('likedChars', []);
+	const [userPicture, setUserPicture] = useState('userPicture', '');
+	const [likedChars, setLikedChars] = useState('likedChars', []);
 
 	const useStyles = makeStyles((theme) => ({
 		root: {
