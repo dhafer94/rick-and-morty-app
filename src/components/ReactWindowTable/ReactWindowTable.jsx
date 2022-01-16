@@ -51,12 +51,15 @@ export const useStyles = makeStyles((theme) => ({
 	headerRow: {
 		cursor: 'default',
 	},
+	//thead cells
 	cell: {
 		display: 'block',
 		flexGrow: 0,
 		flexShrink: 0,
 		textAlign: 'center',
 		borderBottom: '1px solid #363636',
+		color: '#000',
+		fontSize: 20,
 	},
 	expandingCell: {
 		flex: 1,
@@ -106,7 +109,6 @@ const ReactWindowTable = ({ data, columns, clickHandler }) => {
 								itemKey={itemKey}
 								itemData={itemData}>
 								{/* Row component */}
-
 								{({ index, style, data: { columns, items, classes } }) => {
 									const item = items[index];
 
@@ -131,6 +133,8 @@ const ReactWindowTable = ({ data, columns, clickHandler }) => {
 														style={{
 															flexBasis: column.width || false,
 															height: 60,
+															color: '#000',
+															fontSize: 15,
 														}}>
 														{item[column.dataKey]}
 													</TableCell>

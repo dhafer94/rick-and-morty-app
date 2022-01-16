@@ -86,6 +86,7 @@ function App() {
 			height: '30rem',
 			width: '50%',
 			padding: '0 5%',
+
 			// paddingBottom: '1%',
 		},
 		paper: {
