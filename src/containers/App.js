@@ -242,7 +242,7 @@ function App() {
 			<Grid container className={classes.nav}>
 				<ul className={classes.linkUl}>
 					<li>
-						<a onClick={homeFunc} className={classes.link} href='/'>
+						<a onClick={homeFunc} className={classes.link} href=''>
 							<HomeIcon fontSize='large' className={classes.button} />
 						</a>
 					</li>
@@ -363,7 +363,7 @@ function App() {
 			<nav className={classes.nav}>
 				<ul className={classes.linkUl}>
 					<li>
-						<a onClick={homeFunc} className={classes.link} href='/'>
+						<a onClick={homeFunc} className={classes.link} href=''>
 							<HomeIcon fontSize='large' className={classes.button} />
 						</a>
 					</li>
